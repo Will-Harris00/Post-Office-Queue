@@ -17,6 +17,15 @@ struct customerStruct{
 
 typedef struct customerStruct CUST;
 
+struct servicePoint{
+    int servicePointId; /* unique id assigned to each service point */
+    int timeTillFinished; /* time units until customer has finished being served*/
+    CUST *serving; /* pointer to the customer currently being served */
+};
+
+typedef struct servicePoint SP;
+
+
 /* read these in from the command line and delete all global variables */
 int numSims; /* the number of times the simulatio must be repeated */
 /* add function prototype definitions here */
