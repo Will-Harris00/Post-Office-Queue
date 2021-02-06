@@ -45,4 +45,15 @@ int maxQueueLength; /* the maximum number of customers waiting in the queue */
 int main(){
     /* initialise an empty list to use as our queue */
     CUST *root = NULL;
+
+    numServicePoints = 3;
+    int x;
+    SP* servicePoints = malloc(numServicePoints * sizeof *servicePoints); /* servicePoints is an array of pointers to SP structures */
+
+    for (x = 0; x < numServicePoints; x++){
+        servicePoints[x].servicePointId = x + 1;
+    }
+
+    for (x = 0; x < numServicePoints; x++)
+        printf("identifier: %i\n",servicePoints[x].servicePointId);
 }
