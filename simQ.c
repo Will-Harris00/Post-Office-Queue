@@ -27,9 +27,9 @@ queue is full, leave the system as an unfulfilled customer.
 /* A linked list node to store a customer queue entry */
 struct customer{
     int customerId; /* unique id assigned to each customer in order of arrival */
-    int timeout; /* time before getting bored and leaving the queue */
-    int waitTime; /* time before being served at service point */
-    struct customer* next; 
+    int patience; /* time before getting bored and leaving the queue */
+    int timeElapsed; /* time before being served at service point */
+    struct customer* next;
 };
 
 typedef struct customer C;
@@ -45,14 +45,14 @@ typedef struct servicePoint SP;
 /* The queue, front stores the customer at the front and rear
    stores the last customer */
 struct queue { 
-    struct customer *front, *rear; 
+    struct customer *front, *rear;
 };
 
 
 /* function prototypes ------------------------------ */
 SP *createServicePoints(int);
-void checkFinishedServing(SP*, int);
-struct customer* newNode(int);
+void checkFinishedServing(SP*, int, struct queue*);
+struct customer* newNode(int, int);
 struct queue* createQueue();
 void enQueue(struct queue*);
 void deQueue(struct queue*);
@@ -79,23 +79,32 @@ int maxQueueLength; /* the maximum number of customers waiting in the queue */
 /* main function ------------------------------------ */
 int main(){
     /* initialise an empty list to use as our queue */
-    C *root = NULL;
+    struct queue* q = createQueue();
 
     SP* servicePoints = createServicePoints(numServicePoints);
     
-    checkFinishedServing(servicePoints, numServicePoints);
+    enQueue(q);
+    enQueue(q);
+    enQueue(q);
+    enQueue(q);
+
+    checkFinishedServing(servicePoints, numServicePoints, q);
+    /* we have three customers at the service points and a single customer in the queue */
+    printf("Queue Front : %d \n", q->front->customerId);
 }
 
 
 /* functions to manage the queue */
 
 /* utility function to create a new linked list node. */
-struct customer* newNode(int custId)
+struct customer* newNode(int custId, int patience)
 {
-    struct customer* temp = (C*)malloc(sizeof(C)); 
-    temp->customerId = custId; 
-    temp->next = NULL; 
-    return temp; 
+    struct customer* temp = (C*)malloc(sizeof(C));
+    temp->customerId = custId;
+    temp->patience = patience;
+    temp->timeElapsed = 0;
+    temp->next = NULL;
+    return temp;
 }
 
 /* utility function to create an empty queue */
@@ -103,26 +112,26 @@ struct queue* createQueue()
 {
     struct queue* q = (struct queue*)malloc(sizeof(struct queue)); 
     q->front = q->rear = NULL; 
-    return q; 
+    return q;
 }
 
 /* function to add a customer to the queue */
 void enQueue(struct queue* q)
 {   
-    static int custId = 0;
-    custId++;
+    static int custId = 1;
     /* Create a new LL node */
-    struct customer* temp = newNode(custId); 
+    struct customer* temp = newNode(custId, 100); 
+    custId++;
 
     /* If queue is empty, then new node is front and rear both */
-    if (q->rear == NULL) { 
-        q->front = q->rear = temp; 
-        return; 
+    if (q->rear == NULL) {
+        q->front = q->rear = temp;
+        return;
     } 
 
     /* Add the new node at the end of queue and change rear */
-    q->rear->next = temp; 
-    q->rear = temp; 
+    q->rear->next = temp;
+    q->rear = temp;
 }
 
 /* function to remove a customer from the queue */
@@ -133,15 +142,15 @@ void deQueue(struct queue* q)
         return; 
 
     /* Store previous front and move front one node ahead */
-    struct customer* temp = q->front; 
+    struct customer* temp = q->front;
 
-    q->front = q->front->next; 
+    q->front = q->front->next;
 
     /* If front becomes NULL, then change rear also as NULL */
-    if (q->front == NULL) 
-        q->rear = NULL; 
+    if (q->front == NULL)
+        q->rear = NULL;
 
-    free(temp); 
+    free(temp);
 }
 
 
@@ -161,20 +170,25 @@ SP* createServicePoints(int numServicePoints){
     return servicePoints;
 }
 
-void checkFinishedServing(SP* servicePoints, int numServicePoints){
+void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue* q){
     int x;
     int timeLeft;
-    C *serving;
+    C *currentlyServing; /* pointer to customer struct that is at a particular service point */
     for (x = 0; x < numServicePoints; x++){
-        serving = servicePoints[x].serving;
-        if (serving == NULL){
-
+        currentlyServing = servicePoints[x].serving;
+        if ( currentlyServing == NULL ){
+            if (q->front != NULL) {
+                servicePoints[x].serving = q->front;
+                servicePoints[x].timeTillFinished = 5;
+                printf("Serving: %d\n", (servicePoints[x].serving)->customerId);
+                deQueue(q);
+            }
         }
         
         timeLeft = servicePoints[x].timeTillFinished;
         if (timeLeft == 0){
 
         }
-        printf("%d\n", timeLeft);
+        printf("Time left: %d\n", timeLeft);
     }
 }
