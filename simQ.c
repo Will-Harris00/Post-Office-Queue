@@ -83,14 +83,16 @@ int main(){
 
     SP* servicePoints = createServicePoints(numServicePoints);
     
+    /* here we generate four customers to add to the queue */
     enQueue(q);
     enQueue(q);
     enQueue(q);
     enQueue(q);
 
-    checkFinishedServing(servicePoints, numServicePoints, q);
-    /* we have three customers at the service points and a single customer in the queue */
-    printf("Queue Front : %d \n", q->front->customerId);
+    while (q->front != NULL || (servicePoints[0].serving) != NULL) {
+        checkFinishedServing(servicePoints, numServicePoints, q);
+        /* there are only three service points so one customer waits in the queue */
+    }
 }
 
 
@@ -172,23 +174,38 @@ SP* createServicePoints(int numServicePoints){
 
 void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue* q){
     int x;
-    int timeLeft;
-    C *currentlyServing; /* pointer to customer struct that is at a particular service point */
-    for (x = 0; x < numServicePoints; x++){
-        currentlyServing = servicePoints[x].serving;
-        if ( currentlyServing == NULL ){
+    for (x = 0; x < numServicePoints; x++) {
+        if ( (servicePoints[x].serving) == NULL ) {
+            printf("Empty Service Point: %d\n", servicePoints[x].servicePointId);
+
             if (q->front != NULL) {
                 servicePoints[x].serving = q->front;
                 servicePoints[x].timeTillFinished = 5;
-                printf("Serving: %d\n", (servicePoints[x].serving)->customerId);
+                printf("Started Serving Customer: %d\n", (servicePoints[x].serving)->customerId);
                 deQueue(q);
             }
+            continue;
         }
-        
-        timeLeft = servicePoints[x].timeTillFinished;
-        if (timeLeft == 0){
 
+        if ( (servicePoints[x].serving) != NULL ) {
+            --(servicePoints[x].timeTillFinished); /* Decrement time till finished serving counter */
+            printf("Time Remaining: %d\n", servicePoints[x].timeTillFinished);
+
+            if ( (servicePoints[x].timeTillFinished) == 0 ) {
+                C* temp; /* declare a temporary pointer to an empty customer struct */
+                temp = servicePoints[x].serving; /* assign temp so we do not loose track of finished customer */
+                servicePoints[x].serving = NULL; /* remove finished customer from service point */
+                free(temp); /* free memory allocated to finished customer struct */
+
+                if ( q->front != NULL ) {
+                    servicePoints[x].serving = q->front;
+                    servicePoints[x].timeTillFinished = 5;
+                    printf("\nStarted Serving Customer: %d\n", q->front->customerId);
+                    printf("Started Serving Customer: %d\n", (servicePoints[x].serving)->customerId);
+                    deQueue(q);
+                }
+            }
+            continue;
         }
-        printf("Time left: %d\n", timeLeft);
     }
 }
