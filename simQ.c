@@ -73,7 +73,7 @@ int averageTimeTakenToServeCustomer; /* number of time intervals between arrival
 int averageWaitingToleranceOfCustomer; /* average waiting time before customer leaves unfulfilled */
 int closingTime; /* time units until post office closes and no new customer can join the queue */
 int numServicePoints = 3; /* the number of service points at the post office */
-int maxQueueLength; /* the maximum number of customers waiting in the queue */
+int maxQueueLength = 4; /* the maximum number of customers waiting in the queue */
 /* can be -1 if the queue has no maximum length */
 
 
@@ -86,14 +86,12 @@ int main()
     SP* servicePoints = createServicePoints(numServicePoints);
     
     /* here we generate four customers to add to the queue */
-    int count;
-    enQueue(q);
-    enQueue(q);
-    count = getCount(q->front);
-    printf("Count: %d\n", count);
-    enQueue(q);
-    enQueue(q);
-    count = getCount(q->front);
+    int count = 0;
+    while (count < maxQueueLength)
+    {
+        enQueue(q);
+        count = getCount(q->front);
+    }
     printf("Count: %d\n", count);
 
     while (q->front != NULL || (servicePoints[0].serving) != NULL)
