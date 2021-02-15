@@ -25,7 +25,7 @@ queue is full, leave the system as an unfulfilled customer.
 /*----- structure definitions  ---------------------- */
 
 /* A linked list node to store a customer queue entry */
-struct customer{
+struct customer {
     int customerId; /* unique id assigned to each customer in order of arrival */
     int patience; /* time before getting bored and leaving the queue */
     int timeElapsed; /* time before being served at service point */
@@ -34,7 +34,7 @@ struct customer{
 
 typedef struct customer C;
 
-struct servicePoint{
+struct servicePoint {
     int servicePointId; /* unique id assigned to each service point */
     int timeTillFinished; /* time units until customer has finished being served*/
     struct customer *serving; /* pointer to the customer currently being served */
@@ -45,7 +45,7 @@ typedef struct servicePoint SP;
 /* The queue, front stores the customer at the front and rear
    stores the last customer */
 struct queue { 
-    struct customer *front, *rear;
+    struct customer *front, *rear; /* head, tail respectively */
 };
 
 
@@ -56,6 +56,7 @@ struct customer* newNode(int, int);
 struct queue* createQueue();
 void enQueue(struct queue*);
 void deQueue(struct queue*);
+int getCount(struct customer*);
 
 
 /* no global variables allowed in final version */
@@ -77,19 +78,26 @@ int maxQueueLength; /* the maximum number of customers waiting in the queue */
 
 
 /* main function ------------------------------------ */
-int main(){
+int main()
+{
     /* initialise an empty list to use as our queue */
     struct queue* q = createQueue();
 
     SP* servicePoints = createServicePoints(numServicePoints);
     
     /* here we generate four customers to add to the queue */
+    int count;
     enQueue(q);
     enQueue(q);
+    count = getCount(q->front);
+    printf("Count: %d\n", count);
     enQueue(q);
     enQueue(q);
+    count = getCount(q->front);
+    printf("Count: %d\n", count);
 
-    while (q->front != NULL || (servicePoints[0].serving) != NULL) {
+    while (q->front != NULL || (servicePoints[0].serving) != NULL)
+    {
         checkFinishedServing(servicePoints, numServicePoints, q);
         /* there are only three service points so one customer waits in the queue */
     }
@@ -155,13 +163,26 @@ void deQueue(struct queue* q)
     free(temp);
 }
 
+/* function to count number of nodes in queue */
+int getCount(struct customer* head)
+{ 
+    /* Base case */
+    if (head == NULL)
+        return 0;
+  
+    /* count is 1 + count of remaining list */
+    return 1 + getCount(head->next);
+} 
 
-SP* createServicePoints(int numServicePoints){
+
+SP* createServicePoints(int numServicePoints)
+{
     int x;
     SP* servicePoints = malloc(numServicePoints * sizeof *servicePoints); /* servicePoints is an array of pointers to SP structures */
     printf("Size of servicePoints pointer: %d\n",sizeof servicePoints);
     printf("Location of the pointer servicePoints: %p\n",&servicePoints);
-    for (x = 0; x < numServicePoints; x++){
+    for (x = 0; x < numServicePoints; x++)
+    {
         servicePoints[x].servicePointId = x + 1;
         servicePoints[x].timeTillFinished = 0;
         servicePoints[x].serving = NULL;
@@ -172,13 +193,17 @@ SP* createServicePoints(int numServicePoints){
     return servicePoints;
 }
 
-void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue* q){
+void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue* q)
+{
     int x;
-    for (x = 0; x < numServicePoints; x++) {
-        if ( (servicePoints[x].serving) == NULL ) {
+    for (x = 0; x < numServicePoints; x++)
+    {
+        if ( (servicePoints[x].serving) == NULL )
+        {
             printf("Empty Service Point: %d\n", servicePoints[x].servicePointId);
 
-            if (q->front != NULL) {
+            if (q->front != NULL)
+            {
                 servicePoints[x].serving = q->front;
                 servicePoints[x].timeTillFinished = 5;
                 printf("Started Serving Customer: %d\n", (servicePoints[x].serving)->customerId);
@@ -187,17 +212,20 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
             continue;
         }
 
-        if ( (servicePoints[x].serving) != NULL ) {
+        if ( (servicePoints[x].serving) != NULL )
+        {
             --(servicePoints[x].timeTillFinished); /* Decrement time till finished serving counter */
             printf("Time Remaining: %d\n", servicePoints[x].timeTillFinished);
 
-            if ( (servicePoints[x].timeTillFinished) == 0 ) {
+            if ( (servicePoints[x].timeTillFinished) == 0 )
+            {
                 C* temp; /* declare a temporary pointer to an empty customer struct */
                 temp = servicePoints[x].serving; /* assign temp so we do not loose track of finished customer */
                 servicePoints[x].serving = NULL; /* remove finished customer from service point */
                 free(temp); /* free memory allocated to finished customer struct */
 
-                if ( q->front != NULL ) {
+                if ( q->front != NULL )
+                {
                     servicePoints[x].serving = q->front;
                     servicePoints[x].timeTillFinished = 5;
                     printf("\nStarted Serving Customer: %d\n", q->front->customerId);
