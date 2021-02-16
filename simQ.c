@@ -74,7 +74,7 @@ int averageTimeTakenToServeCustomer; /* number of time intervals between arrival
 int averageWaitingToleranceOfCustomer; /* average waiting time before customer leaves unfulfilled */
 int closingTime; /* time units until post office closes and no new customer can join the queue */
 int numServicePoints = 3; /* the number of service points at the post office */
-int maxQueueLength = 4; /* the maximum number of customers waiting in the queue */
+int maxQueueLength = 5; /* the maximum number of customers waiting in the queue */
 /* can be -1 if the queue has no maximum length */
 
 
@@ -93,13 +93,13 @@ int main()
         enQueue(q);
         count = getCount(q->front);
     }
-    printf("Count: %d\n", count);
+    printf("Count: %d\n\n", count);
     fflush(stdout);
 
-    /* remove one instance of a node that has zero patience remaining */
+    /* remove all nodes that have zero patience remaining */
     checkPatienceLimit(&q->front, q);
 
-     while ( ((q->front) != NULL) || (servicePoints[0].serving) != NULL || (servicePoints[1].serving) != NULL || (servicePoints[2].serving) != NULL )
+    while ( ((q->front) != NULL) || (servicePoints[0].serving) != NULL || (servicePoints[1].serving) != NULL || (servicePoints[2].serving) != NULL )
     { 
         checkFinishedServing(servicePoints, numServicePoints, q);
         /* there are only three service points so one customer waits in the queue */
@@ -114,9 +114,9 @@ struct customer* newNode(int custId, int patience)
 {
     struct customer* temp = (C*)malloc(sizeof(C));
     temp->customerId = custId;
-    if ( custId == 4 )
+    if ( custId == 4 || custId == 5 )
     {
-        temp->patience = 1;
+        temp->patience = 0;
     }
     else{
         temp->patience = 1;
@@ -199,9 +199,10 @@ SP* createServicePoints(int numServicePoints)
         servicePoints[x].serving = NULL;
     }
 
-    for (x = 0; x < numServicePoints; x++)
+    for (x = 0; x < numServicePoints; x++){
         printf("SP identifier: %i\n",servicePoints[x].servicePointId);
         fflush(stdout);
+    }
     return servicePoints;
 }
 
@@ -263,29 +264,38 @@ void checkPatienceLimit(struct customer** head_ref, struct queue* q)
     struct customer *temp = *head_ref, *prev;
  
     /* If the rear (head) node itself has zero patience remaining */
-    if (temp != NULL && temp->patience == 0) {
+    while ( temp != NULL && temp->patience == 0 )
+    {
         printf("Removed customer: %d\n", temp->customerId);
+        fflush(stdout);
+
         *head_ref = temp->next; /* Changed head */
-        printf("Front of queue: %s\n", q->front);
         free(temp); /* free old head */
-        return;
+        temp = *head_ref;
     }
- 
-    /* Search for nodes to be deleted, keep track of the
-       previous node as we need to change 'prev->next' */
-    while (temp != NULL && temp->patience != 0) {
-        prev = temp;
-        temp = temp->next;
+
+    /* Delete occurrences other than head */
+    while ( temp != NULL ) 
+    {
+        /* Search for nodes to be deleted, keep track of the
+        previous node as we need to change 'prev->next' */
+        while ( temp != NULL && temp->patience != 0 )
+        {
+            prev = temp;
+            temp = temp->next;
+        }
+    
+        /* If no node with zero patience is present in linked list queue */
+        if ( temp == NULL )
+            return;
+    
+        /* Unlink the node from linked list */
+        printf("Removed customer: %d\n", temp->customerId);
+        fflush(stdout);
+        prev->next = temp->next;
+        free(temp); /* Free memory */
+
+        /* Update temp for next iteration of outer loop */
+        temp = prev->next;
     }
- 
-    /* If no node with zero patience is present in linked list queue */
-    if (temp == NULL)
-        return;
- 
-    /* Unlink the node from linked list */
-    printf("Removed customer: %d\n", temp->customerId);
-    prev->next = temp->next;
- 
-    free(temp); /* Free memory */
-    printf("Front of queue: %d\n", q->front);
 }
