@@ -58,6 +58,7 @@ void enQueue(struct queue*);
 void deQueue(struct queue*);
 int getCount(struct customer*);
 void checkPatienceLimit(struct customer**, struct queue*);
+int checkAllSPEmpty(SP*, int);
 
 
 /* no global variables allowed in final version */
@@ -99,10 +100,13 @@ int main()
     /* remove all nodes that have zero patience remaining */
     checkPatienceLimit(&q->front, q);
 
-    while ( ((q->front) != NULL) || (servicePoints[0].serving) != NULL || (servicePoints[1].serving) != NULL || (servicePoints[2].serving) != NULL )
-    { 
+    static int notAllEmpty = 1;
+
+    while ( ((q->front) != NULL) || notAllEmpty )
+    {
         checkFinishedServing(servicePoints, numServicePoints, q);
-        /* there are only three service points so one customer waits in the queue */
+        notAllEmpty = !( checkAllSPEmpty(servicePoints, numServicePoints) );
+        /* there are only three service points two customer waits in the queue */
     }
 }
 
@@ -172,6 +176,21 @@ void deQueue(struct queue* q)
     free(temp);
 }
 
+/* function to check all service points are empty */
+int checkAllSPEmpty(SP* servicePoints, int numServicePoints)
+{   
+    int allEmpty = 0;
+    int x;
+    for (x = 0; x < numServicePoints; x++)
+    {
+        if ( (servicePoints[x].serving) == NULL )
+        {
+            allEmpty = 1;
+        }
+    }
+    return allEmpty;
+}
+
 /* function to count number of nodes in queue */
 int getCount(struct customer* head)
 { 
@@ -192,14 +211,15 @@ SP* createServicePoints(int numServicePoints)
     fflush(stdout);
     printf("Location of the pointer servicePoints: %p\n",&servicePoints);
     fflush(stdout);
-    for (x = 0; x < numServicePoints; x++)
+    for ( x = 0; x < numServicePoints; x++ )
     {
         servicePoints[x].servicePointId = x + 1;
         servicePoints[x].timeTillFinished = 0;
         servicePoints[x].serving = NULL;
     }
 
-    for (x = 0; x < numServicePoints; x++){
+    for ( x = 0; x < numServicePoints; x++ )
+    {
         printf("SP identifier: %i\n",servicePoints[x].servicePointId);
         fflush(stdout);
     }
@@ -209,14 +229,14 @@ SP* createServicePoints(int numServicePoints)
 void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue* q)
 {
     int x;
-    for (x = 0; x < numServicePoints; x++)
+    for ( x = 0; x < numServicePoints; x++ )
     {
         if ( (servicePoints[x].serving) == NULL )
         {
             printf("Empty Service Point: %d\n", servicePoints[x].servicePointId);
             fflush(stdout);
 
-            if (q->front != NULL)
+            if ( q->front != NULL )
             {
                 servicePoints[x].serving = q->front;
                 servicePoints[x].timeTillFinished = 5;
