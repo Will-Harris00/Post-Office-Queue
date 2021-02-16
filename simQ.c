@@ -57,6 +57,7 @@ struct queue* createQueue();
 void enQueue(struct queue*);
 void deQueue(struct queue*);
 int getCount(struct customer*);
+void checkPatienceLimit(struct customer**, struct queue*);
 
 
 /* no global variables allowed in final version */
@@ -87,15 +88,19 @@ int main()
     
     /* here we generate four customers to add to the queue */
     int count = 0;
-    while (count < maxQueueLength)
+    while ( count < maxQueueLength )
     {
         enQueue(q);
         count = getCount(q->front);
     }
     printf("Count: %d\n", count);
+    fflush(stdout);
 
-    while (q->front != NULL || (servicePoints[0].serving) != NULL)
-    {
+    /* remove one instance of a node that has zero patience remaining */
+    checkPatienceLimit(&q->front, q);
+
+     while ( ((q->front) != NULL) || (servicePoints[0].serving) != NULL || (servicePoints[1].serving) != NULL || (servicePoints[2].serving) != NULL )
+    { 
         checkFinishedServing(servicePoints, numServicePoints, q);
         /* there are only three service points so one customer waits in the queue */
     }
@@ -109,7 +114,13 @@ struct customer* newNode(int custId, int patience)
 {
     struct customer* temp = (C*)malloc(sizeof(C));
     temp->customerId = custId;
-    temp->patience = patience;
+    if ( custId == 4 )
+    {
+        temp->patience = 1;
+    }
+    else{
+        temp->patience = 1;
+    }
     temp->timeElapsed = 0;
     temp->next = NULL;
     return temp;
@@ -178,7 +189,9 @@ SP* createServicePoints(int numServicePoints)
     int x;
     SP* servicePoints = malloc(numServicePoints * sizeof *servicePoints); /* servicePoints is an array of pointers to SP structures */
     printf("Size of servicePoints pointer: %d\n",sizeof servicePoints);
+    fflush(stdout);
     printf("Location of the pointer servicePoints: %p\n",&servicePoints);
+    fflush(stdout);
     for (x = 0; x < numServicePoints; x++)
     {
         servicePoints[x].servicePointId = x + 1;
@@ -188,6 +201,7 @@ SP* createServicePoints(int numServicePoints)
 
     for (x = 0; x < numServicePoints; x++)
         printf("SP identifier: %i\n",servicePoints[x].servicePointId);
+        fflush(stdout);
     return servicePoints;
 }
 
@@ -199,12 +213,14 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
         if ( (servicePoints[x].serving) == NULL )
         {
             printf("Empty Service Point: %d\n", servicePoints[x].servicePointId);
+            fflush(stdout);
 
             if (q->front != NULL)
             {
                 servicePoints[x].serving = q->front;
                 servicePoints[x].timeTillFinished = 5;
-                printf("Started Serving Customer: %d\n", (servicePoints[x].serving)->customerId);
+                printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
+                fflush(stdout);
                 deQueue(q);
             }
             continue;
@@ -214,6 +230,7 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
         {
             --(servicePoints[x].timeTillFinished); /* Decrement time till finished serving counter */
             printf("Time Remaining: %d\n", servicePoints[x].timeTillFinished);
+            fflush(stdout);
 
             if ( (servicePoints[x].timeTillFinished) == 0 )
             {
@@ -226,12 +243,49 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
                 {
                     servicePoints[x].serving = q->front;
                     servicePoints[x].timeTillFinished = 5;
-                    printf("\nStarted Serving Customer: %d\n", q->front->customerId);
-                    printf("Started Serving Customer: %d\n", (servicePoints[x].serving)->customerId);
+                    printf("\nFront of Queue: %d\n", q->front->customerId);
+                    fflush(stdout);
+                    printf("\nService Point: %d\n", servicePoints[x].servicePointId);
+                    fflush(stdout);
+                    printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
+                    fflush(stdout);
                     deQueue(q);
                 }
             }
-            continue;
         }
     }
+}
+
+
+void checkPatienceLimit(struct customer** head_ref, struct queue* q)
+{
+    /* Store rear (head) node */
+    struct customer *temp = *head_ref, *prev;
+ 
+    /* If the rear (head) node itself has zero patience remaining */
+    if (temp != NULL && temp->patience == 0) {
+        printf("Removed customer: %d\n", temp->customerId);
+        *head_ref = temp->next; /* Changed head */
+        printf("Front of queue: %s\n", q->front);
+        free(temp); /* free old head */
+        return;
+    }
+ 
+    /* Search for nodes to be deleted, keep track of the
+       previous node as we need to change 'prev->next' */
+    while (temp != NULL && temp->patience != 0) {
+        prev = temp;
+        temp = temp->next;
+    }
+ 
+    /* If no node with zero patience is present in linked list queue */
+    if (temp == NULL)
+        return;
+ 
+    /* Unlink the node from linked list */
+    printf("Removed customer: %d\n", temp->customerId);
+    prev->next = temp->next;
+ 
+    free(temp); /* Free memory */
+    printf("Front of queue: %d\n", q->front);
 }
