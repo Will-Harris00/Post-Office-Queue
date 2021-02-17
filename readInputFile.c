@@ -5,13 +5,13 @@
 int main()
 {
     FILE *fp;
-    char attribute[51];
-    unsigned int averageNewCustomersPerInterval = 3; /* average whole number of customers per time interval */
-    unsigned int averageTimeTakenToServeCustomer = 5; /* number of time intervals between arrival and being served */
-    unsigned int averageWaitingToleranceOfCustomer = 5; /* average waiting time before customer leaves unfulfilled */
-    unsigned int closingTime = 20; /* time units until post office closes and no new customer can join the queue */
-    unsigned int numServicePoints = 3; /* the number of service points at the post office */
-    int maxQueueLength = 5; /* the maximum number of customers waiting in the queue */
+    char varName[51];
+    unsigned int averageNewCustomersPerInterval; /* average whole number of customers per time interval */
+    unsigned int averageTimeTakenToServeCustomer; /* number of time intervals between arrival and being served */
+    unsigned int averageWaitingToleranceOfCustomer; /* average waiting time before customer leaves unfulfilled */
+    unsigned int closingTime; /* time units until post office closes and no new customer can join the queue */
+    unsigned int numServicePoints; /* the number of service points at the post office */
+    int maxQueueLength; /* the maximum number of customers waiting in the queue */
     /* can be -1 if the queue has no maximum length */
 
     /* short int is not big enough so would overwrite
@@ -27,17 +27,17 @@ int main()
     while ( !feof(fp) )
     {
         if ( fscanf(fp, "%s %d\n%s %u\n%s %u\n%s %u\n%s %u\n%s %u\n",
-                                   attribute,
+                                   varName,
                                    &maxQueueLength,
-                                   attribute,
+                                   varName,
                                    &numServicePoints,
-                                   attribute,
+                                   varName,
                                    &closingTime,
-                                   attribute,
+                                   varName,
                                    &averageNewCustomersPerInterval,
-                                   attribute,
+                                   varName,
                                    &averageTimeTakenToServeCustomer,
-                                   attribute,
+                                   varName,
                                    &averageWaitingToleranceOfCustomer) != 12 )
         {
             fprintf(stderr,"File format invalid\n");
