@@ -51,12 +51,14 @@ struct queue {
 
 /* function prototypes ------------------------------ */
 SP *createServicePoints(int);
-void checkFinishedServing(SP*, int, struct queue*);
 struct customer* newNode(int, int);
+
 struct queue* createQueue();
 void enQueue(struct queue*);
 void deQueue(struct queue*);
 int getCount(struct customer*);
+
+void checkFinishedServing(SP*, int, struct queue*);
 void checkPatienceLimit(struct customer**, struct queue*);
 int checkAllSPEmpty(SP*, int);
 
@@ -66,8 +68,8 @@ int checkAllSPEmpty(SP*, int);
 /* read these in from the command line and delete all global variables */
 int numSims; /* the number of times the simulatio must be repeated */
 /* add function prototype definitions here */
-char fileIn[]; /* input file name containing parameters */
-char fileOut[]; /* output file name where results are to be stored */
+char fileIn[1]; /* input file name containing parameters */
+char fileOut[1]; /* output file name where results are to be stored */
 
 /* read these in from the input file and delete all global variables */
 int averageNewCustomersPerInterval; /* average whole number of customers per time interval */
@@ -122,7 +124,8 @@ struct customer* newNode(int custId, int patience)
     {
         temp->patience = 0;
     }
-    else{
+    else
+    {
         temp->patience = 1;
     }
     temp->timeElapsed = 0;
@@ -147,7 +150,8 @@ void enQueue(struct queue* q)
     custId++;
 
     /* If queue is empty, then new node is front and rear both */
-    if (q->rear == NULL) {
+    if ( q->rear == NULL )
+    {
         q->front = q->rear = temp;
         return;
     } 
@@ -161,7 +165,7 @@ void enQueue(struct queue* q)
 void deQueue(struct queue* q)
 {
     /* If queue is empty, return NULL. */
-    if (q->front == NULL) 
+    if ( q->front == NULL ) 
         return; 
 
     /* Store previous front and move front one node ahead */
@@ -170,7 +174,7 @@ void deQueue(struct queue* q)
     q->front = q->front->next;
 
     /* If front becomes NULL, then change rear also as NULL */
-    if (q->front == NULL)
+    if ( q->front == NULL )
         q->rear = NULL;
 
     free(temp);
@@ -181,7 +185,7 @@ int checkAllSPEmpty(SP* servicePoints, int numServicePoints)
 {   
     int allEmpty = 0;
     int x;
-    for (x = 0; x < numServicePoints; x++)
+    for ( x = 0; x < numServicePoints; x++ )
     {
         if ( (servicePoints[x].serving) == NULL )
         {
@@ -195,7 +199,7 @@ int checkAllSPEmpty(SP* servicePoints, int numServicePoints)
 int getCount(struct customer* head)
 { 
     /* Base case */
-    if (head == NULL)
+    if ( head == NULL )
         return 0;
   
     /* count is 1 + count of remaining list */
