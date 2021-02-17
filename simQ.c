@@ -126,6 +126,7 @@ int main()
     }
     
     free(servicePoints);
+    free(q);
 }
 
 
@@ -258,9 +259,7 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
         printf("\nService Point: %d\n", servicePoints[x].servicePointId);
         fflush(stdout);
         if ( (servicePoints[x].serving) == NULL )
-        {   
-            printf("branch one");
-            fflush(stdout);
+        {
             printf("Empty Service Point: %d\n", servicePoints[x].servicePointId);
             fflush(stdout);
 
@@ -277,9 +276,7 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
         }
 
         if ( (servicePoints[x].serving) != NULL )
-        {   
-            printf("branch two");
-            fflush(stdout);
+        {
             --(servicePoints[x].timeTillFinished); /* Decrement time till finished serving counter */
             printf("Time Remaining: %d\n", servicePoints[x].timeTillFinished);
             fflush(stdout);
