@@ -124,6 +124,8 @@ int main()
 
         timeUnits++;
     }
+    
+    free(servicePoints);
 }
 
 
@@ -131,8 +133,14 @@ int main()
 
 /* utility function to create a new linked list node. */
 struct customer* newNode(int custId, int patience)
-{
-    struct customer* temp = (C*)malloc(sizeof(C));
+{   
+    struct customer* temp;
+    if ( !( temp = (C *)malloc(sizeof(C)) ) ) /* check memory assignment */
+    {
+        printf("Out of memory\n");
+        exit(1);
+    }
+
     temp->customerId = custId;
     temp->patience = patience;
     temp->timeElapsed = 0;
@@ -143,7 +151,12 @@ struct customer* newNode(int custId, int patience)
 /* utility function to create an empty queue */
 struct queue* createQueue()
 {
-    struct queue* q = (struct queue*)malloc(sizeof(struct queue)); 
+    struct queue* q;
+    if ( !( q = (struct queue*)malloc(sizeof(struct queue)) ) ) /* check memory assignment */
+    {
+        printf("Out of memory\n");
+        exit(1);
+    }
     q->front = q->rear = NULL; 
     return q;
 }
