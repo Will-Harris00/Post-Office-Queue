@@ -59,7 +59,7 @@ void deQueue(struct queue*);
 int getCount(struct customer*);
 
 void checkFinishedServing(SP*, int, struct queue*);
-void checkPatienceLimit(struct customer**, struct queue*);
+void checkPatienceLimit(struct customer**);
 int checkAllSPEmpty(SP*, int);
 
 
@@ -99,16 +99,18 @@ int main()
     printf("Count: %d\n\n", count);
     fflush(stdout);
 
-    /* remove all nodes that have zero patience remaining */
-    checkPatienceLimit(&q->front, q);
-
     static int notAllEmpty = 1;
 
     while ( ((q->front) != NULL) || notAllEmpty )
     {   
+        /* check if customers are still being served */
         notAllEmpty = !( checkAllSPEmpty(servicePoints, numServicePoints) );
+        
+        /* assigned waiting customer to service points and remove fufilled customers */
         checkFinishedServing(servicePoints, numServicePoints, q);
-        /* there are only three service points two customer waits in the queue */
+        
+        /* remove all nodes that have zero patience remaining */
+        checkPatienceLimit(&q->front);
     }
 }
 
@@ -120,7 +122,7 @@ struct customer* newNode(int custId, int patience)
 {
     struct customer* temp = (C*)malloc(sizeof(C));
     temp->customerId = custId;
-    temp->patience = 1;
+    temp->patience = patience;
     temp->timeElapsed = 0;
     temp->next = NULL;
     return temp;
@@ -139,7 +141,7 @@ void enQueue(struct queue* q)
 {   
     static int custId = 1;
     /* Create a new LL node */
-    struct customer* temp = newNode(custId, 100); 
+    struct customer* temp = newNode(custId, 2); 
     custId++;
 
     /* If queue is empty, then new node is front and rear both */
@@ -224,7 +226,7 @@ SP* createServicePoints(int numServicePoints)
 }
 
 void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue* q)
-{
+{   
     int x;
     for ( x = 0; x < numServicePoints; x++ )
     {
@@ -275,8 +277,8 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
 }
 
 
-void checkPatienceLimit(struct customer** head_ref, struct queue* q)
-{
+void checkPatienceLimit(struct customer** head_ref)
+{   
     /* Store rear (head) node */
     struct customer *temp = *head_ref, *prev;
  
@@ -293,11 +295,12 @@ void checkPatienceLimit(struct customer** head_ref, struct queue* q)
 
     /* Delete occurrences other than head */
     while ( temp != NULL ) 
-    {
+    {   
         /* Search for nodes to be deleted, keep track of the
         previous node as we need to change 'prev->next' */
         while ( temp != NULL && temp->patience != 0 )
-        {
+        {   
+            --(temp->patience); /* decrement waiting tolerance limit */
             prev = temp;
             temp = temp->next;
         }
