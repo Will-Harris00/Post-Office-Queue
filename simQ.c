@@ -258,10 +258,15 @@ int getCount(struct customer* head)
 SP* createServicePoints(unsigned int numSP)
 {
     unsigned int x;
-    SP* servicePoints = malloc(numSP * sizeof *servicePoints); /* servicePoints is an array of pointers to SP structures */
-    printf("Size of servicePoints pointer: %d\n",sizeof servicePoints);
+    SP* servicePoints; /* servicePoints is an array of pointers to SP structures */
+    if ( !( servicePoints = (SP *)malloc(numSP * (sizeof(*servicePoints))) ) ) /* check memory assignment */
+    {
+        printf("Out of memory\n");
+        exit(1);
+    }
+    printf("Size of servicePoints pointer: %d\n", sizeof servicePoints);
     fflush(stdout);
-    printf("Location of the pointer servicePoints: %p\n",&servicePoints);
+    printf("Location of the pointer servicePoints: %p\n", &servicePoints);
     fflush(stdout);
     for ( x = 0; x < numSP; x++ )
     {
