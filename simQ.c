@@ -90,10 +90,24 @@ int main()
     SP* servicePoints = createServicePoints(numServicePoints);
     
     int timeUnits = 0;
-    int count = 0;
     int notAllEmpty = 0;
-    while ( timeUnits < closingTime )
+    while ( timeUnits < closingTime || (q->front) != NULL || notAllEmpty)
     {   
+        int count = 0;
+        printf("Time units: %d\n", timeUnits);
+
+        if ( (q->front) != NULL || notAllEmpty )
+        {
+            /* assigned waiting customer to service points and remove fufilled customers */
+            checkFinishedServing(servicePoints, numServicePoints, q);
+            
+            /* remove all nodes that have zero patience remaining */
+            checkPatienceLimit(&q->front);
+
+            /* check if customers are still being served */
+            notAllEmpty = !( checkAllSPEmpty(servicePoints, numServicePoints) );
+        }
+
         if ( timeUnits < closingTime )
         {
             int j;
@@ -109,18 +123,6 @@ int main()
         }
 
         timeUnits++;
-    }
-
-    while ( ((q->front) != NULL) || notAllEmpty )
-    {   
-        /* check if customers are still being served */
-        notAllEmpty = !( checkAllSPEmpty(servicePoints, numServicePoints) );
-        
-        /* assigned waiting customer to service points and remove fufilled customers */
-        checkFinishedServing(servicePoints, numServicePoints, q);
-        
-        /* remove all nodes that have zero patience remaining */
-        checkPatienceLimit(&q->front);
     }
 }
 
@@ -239,9 +241,13 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
 {   
     int x;
     for ( x = 0; x < numServicePoints; x++ )
-    {
+    {   
+        printf("\nService Point: %d\n", servicePoints[x].servicePointId);
+        fflush(stdout);
         if ( (servicePoints[x].serving) == NULL )
-        {
+        {   
+            printf("branch one");
+            fflush(stdout);
             printf("Empty Service Point: %d\n", servicePoints[x].servicePointId);
             fflush(stdout);
 
@@ -252,30 +258,31 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
                 printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
                 fflush(stdout);
                 deQueue(q);
+                continue; /* ensures waiting tolerance limit is not decremented for newly served customer */
             }
             continue;
         }
 
         if ( (servicePoints[x].serving) != NULL )
-        {
+        {   
+            printf("branch two");
+            fflush(stdout);
             --(servicePoints[x].timeTillFinished); /* Decrement time till finished serving counter */
             printf("Time Remaining: %d\n", servicePoints[x].timeTillFinished);
             fflush(stdout);
 
             if ( (servicePoints[x].timeTillFinished) == 0 )
-            {
-                C* temp; /* declare a temporary pointer to an empty customer struct */
-                temp = servicePoints[x].serving; /* assign temp so we do not loose track of finished customer */
+            {   
+                C* tmp; /* declare a temporary pointer to an empty customer struct */
+                tmp = servicePoints[x].serving; /* assign temp so we do not loose track of finished customer */
                 servicePoints[x].serving = NULL; /* remove finished customer from service point */
-                free(temp); /* free memory allocated to finished customer struct */
+                /* free(tmp); */ /* free memory allocated to finished customer struct */
 
                 if ( q->front != NULL )
                 {
                     servicePoints[x].serving = q->front;
                     servicePoints[x].timeTillFinished = averageTimeTakenToServeCustomer;
                     printf("\nFront of Queue: %d\n", q->front->customerId);
-                    fflush(stdout);
-                    printf("\nService Point: %d\n", servicePoints[x].servicePointId);
                     fflush(stdout);
                     printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
                     fflush(stdout);
