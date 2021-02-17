@@ -65,18 +65,25 @@ int checkAllSPEmpty(SP*, unsigned int);
 int readInputFile(int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *);
 
 
-/* no global variables allowed in final version */
-
-/* read these in from the command line and delete all global variables */
-unsigned int numSims; /* the number of times the simulation must be repeated */
-/* add function prototype definitions here */
-char fileIn[1]; /* input file name containing parameters */
-char fileOut[1]; /* output file name where results are to be stored */
-
-
 /* main function ------------------------------------ */
-int main()
-{   
+int main(int argc, char **argv)
+{
+    if ( argc != 4 )
+    {
+        fprintf(stderr,"Invalid number of arguments\n");
+        exit(-1);
+    }
+
+
+    /* read these in from the command line */
+    char* fileIn = argv[1]; /* input file name containing parameters */
+    unsigned int numSims = atoi(argv[2]); /* the number of times the simulation must be repeated */
+    char* fileOut = argv[3]; /* output file name where results are to be stored */
+
+    printf("fileIn: %s\n", fileIn);
+    printf("numSims: %d\n", numSims);
+    printf("fileOut: %s\n", fileOut);
+
     /* read these in from the input file */
     unsigned int averageNewCustomersPerInterval; /* average whole number of customers per time interval */
     unsigned int averageTimeTakenToServeCustomer; /* number of time intervals between arrival and being served */
@@ -88,7 +95,7 @@ int main()
 
     if ( readInputFile(&maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
                   &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval) )
-                  exit(-1);
+                  exit(-2);
 
     printf("maxQueueLength: %d\n", maxQueueLength);
     printf("numServicePoints: %u\n", numServicePoints);
