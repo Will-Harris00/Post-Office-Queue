@@ -26,17 +26,17 @@ queue is full, leave the system as an unfulfilled customer.
 
 /* A linked list node to store a customer queue entry */
 struct customer {
-    int customerId; /* unique id assigned to each customer in order of arrival */
-    int patience; /* time before getting bored and leaving the queue */
-    int timeElapsed; /* time before being served at service point */
+    unsigned int customerId; /* unique id assigned to each customer in order of arrival */
+    unsigned int patience; /* time before getting bored and leaving the queue */
+    unsigned int timeElapsed; /* time before being served at service point */
     struct customer* next;
 };
 
 typedef struct customer C;
 
 struct servicePoint {
-    int servicePointId; /* unique id assigned to each service point */
-    int timeTillFinished; /* time units until customer has finished being served*/
+    unsigned int servicePointId; /* unique id assigned to each service point */
+    unsigned int timeTillFinished; /* time units until customer has finished being served*/
     struct customer *serving; /* pointer to the customer currently being served */
 };
 
@@ -50,34 +50,34 @@ struct queue {
 
 
 /* function prototypes ------------------------------ */
-SP *createServicePoints(int);
-struct customer* newNode(int, int);
+SP *createServicePoints(unsigned int);
+struct customer* newNode(unsigned int, unsigned int);
 
 struct queue* createQueue();
 void enQueue(struct queue*);
 void deQueue(struct queue*);
 int getCount(struct customer*);
 
-void checkFinishedServing(SP*, int, struct queue*);
+void checkFinishedServing(SP*, unsigned int, struct queue*);
 void checkPatienceLimit(struct customer**);
-int checkAllSPEmpty(SP*, int);
+int checkAllSPEmpty(SP*, unsigned int);
 
 
 /* no global variables allowed in final version */
 
 /* read these in from the command line and delete all global variables */
-int numSims; /* the number of times the simulatio must be repeated */
+unsigned int numSims; /* the number of times the simulatio must be repeated */
 /* add function prototype definitions here */
 char fileIn[1]; /* input file name containing parameters */
 char fileOut[1]; /* output file name where results are to be stored */
 
 /* read these in from the input file and delete all global variables */
-int averageNewCustomersPerInterval = 3; /* average whole number of customers per time interval */
-int averageTimeTakenToServeCustomer = 5; /* number of time intervals between arrival and being served */
-int averageWaitingToleranceOfCustomer = 5; /* average waiting time before customer leaves unfulfilled */
-int closingTime = 20; /* time units until post office closes and no new customer can join the queue */
-int numServicePoints = 3; /* the number of service points at the post office */
-int maxQueueLength = 5; /* the maximum number of customers waiting in the queue */
+unsigned int averageNewCustomersPerInterval = 3; /* average whole number of customers per time interval */
+unsigned int averageTimeTakenToServeCustomer = 5; /* number of time intervals between arrival and being served */
+unsigned int averageWaitingToleranceOfCustomer = 5; /* average waiting time before customer leaves unfulfilled */
+unsigned int closingTime = 20; /* time units until post office closes and no new customer can join the queue */
+unsigned int numServicePoints = 3; /* the number of service points at the post office */
+unsigned int maxQueueLength = 5; /* the maximum number of customers waiting in the queue */
 /* can be -1 if the queue has no maximum length */
 
 
@@ -89,9 +89,9 @@ int main()
 
     SP* servicePoints = createServicePoints(numServicePoints);
     
-    int timeUnits = 0;
-    int notAllEmpty = 0;
-    int count = 0;
+    unsigned int timeUnits = 0;
+    unsigned int notAllEmpty = 0;
+    unsigned int count = 0;
     while ( timeUnits < closingTime || (q->front) != NULL || notAllEmpty)
     {
         printf("Time units: %d\n", timeUnits);
@@ -110,7 +110,7 @@ int main()
 
         if ( timeUnits < closingTime )
         {
-            int j;
+            unsigned int j;
             for ( j = 0; j < averageNewCustomersPerInterval; j++ )
             {   
                 count = getCount(q->front);
@@ -134,7 +134,7 @@ int main()
 /* functions to manage the queue */
 
 /* utility function to create a new linked list node. */
-struct customer* newNode(int custId, int patience)
+struct customer* newNode(unsigned int custId, unsigned int patience)
 {   
     struct customer* temp;
     if ( !( temp = (C *)malloc(sizeof(C)) ) ) /* check memory assignment */
@@ -166,7 +166,7 @@ struct queue* createQueue()
 /* function to add a customer to the queue */
 void enQueue(struct queue* q)
 {   
-    static int custId = 1;
+    static unsigned int custId = 1;
     /* Create a new LL node */
     struct customer* temp = newNode(custId, averageWaitingToleranceOfCustomer); 
     custId++;
@@ -203,10 +203,10 @@ void deQueue(struct queue* q)
 }
 
 /* function to check all service points are empty */
-int checkAllSPEmpty(SP* servicePoints, int numServicePoints)
+int checkAllSPEmpty(SP* servicePoints, unsigned int numServicePoints)
 {   
-    int allEmpty = 1;
-    int x;
+    unsigned int allEmpty = 1;
+    unsigned int x;
     for ( x = 0; x < numServicePoints; x++ )
     {
         if ( (servicePoints[x].serving) != NULL )
@@ -229,9 +229,9 @@ int getCount(struct customer* head)
 } 
 
 
-SP* createServicePoints(int numServicePoints)
+SP* createServicePoints(unsigned int numServicePoints)
 {
-    int x;
+    unsigned int x;
     SP* servicePoints = malloc(numServicePoints * sizeof *servicePoints); /* servicePoints is an array of pointers to SP structures */
     printf("Size of servicePoints pointer: %d\n",sizeof servicePoints);
     fflush(stdout);
@@ -252,9 +252,9 @@ SP* createServicePoints(int numServicePoints)
     return servicePoints;
 }
 
-void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue* q)
+void checkFinishedServing(SP* servicePoints, unsigned int numServicePoints, struct queue* q)
 {   
-    int x;
+    unsigned int x;
     for ( x = 0; x < numServicePoints; x++ )
     {   
         printf("\nService Point: %d\n", servicePoints[x].servicePointId);
