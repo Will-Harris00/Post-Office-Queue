@@ -2,10 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(){
+int main()
+{
     FILE *fp;
     char attribute[51];
-    int data;
+    unsigned int averageNewCustomersPerInterval = 3; /* average whole number of customers per time interval */
+    unsigned int averageTimeTakenToServeCustomer = 5; /* number of time intervals between arrival and being served */
+    unsigned int averageWaitingToleranceOfCustomer = 5; /* average waiting time before customer leaves unfulfilled */
+    unsigned int closingTime = 20; /* time units until post office closes and no new customer can join the queue */
+    unsigned int numServicePoints = 3; /* the number of service points at the post office */
+    int maxQueueLength = 5; /* the maximum number of customers waiting in the queue */
+    /* can be -1 if the queue has no maximum length */
 
     /* short int is not big enough so would overwrite
        the start of name and cause to terminate early */
@@ -19,16 +26,31 @@ int main(){
 
     while ( !feof(fp) )
     {
-        if ( fscanf(fp, "%s %d\n",
+        if ( fscanf(fp, "%s %d\n%s %u\n%s %u\n%s %u\n%s %u\n%s %u\n",
                                    attribute,
-                                   &data) != 2 )
+                                   &maxQueueLength,
+                                   attribute,
+                                   &numServicePoints,
+                                   attribute,
+                                   &closingTime,
+                                   attribute,
+                                   &averageNewCustomersPerInterval,
+                                   attribute,
+                                   &averageTimeTakenToServeCustomer,
+                                   attribute,
+                                   &averageWaitingToleranceOfCustomer) != 12 )
         {
             fprintf(stderr,"File format invalid\n");
             fclose(fp);
             return -2;
         }
-        printf("attribute: %s, data: %u\n", attribute, data);
     }
+    printf("maxQueueLength: %d\n", maxQueueLength);
+    printf("numServicePoints: %u\n", numServicePoints);
+    printf("closingTime: value: %u\n", closingTime);
+    printf("averageNewCustomersPerInterval: %u\n", averageNewCustomersPerInterval);
+    printf("averageTimeTakenToServeCustomer: %u\n", averageTimeTakenToServeCustomer);
+    printf("averageWaitingToleranceOfCustomer: %u\n", averageWaitingToleranceOfCustomer);
 
     fclose(fp);
 
