@@ -77,13 +77,20 @@ int main(int argc, char **argv)
 
     /* read these in from the command line */
     char* fileIn = argv[1]; /* input file name containing parameters */
-    unsigned int numSims = atoi(argv[2]); /* the number of times the simulation must be repeated */
+    int numSims = atoi(argv[2]); /* the number of times the simulation must be repeated */
     char* fileOut = argv[3]; /* output file name where results are to be stored */
+
+    if ( numSims < 1 )
+    {
+        fprintf(stderr,"Invalid number of simulations\n");
+        exit(-2);
+    }
 
     printf("fileIn: %s\n", fileIn);
     printf("numSims: %d\n", numSims);
     printf("fileOut: %s\n", fileOut);
 
+    exit(0);
     /* read these in from the input file */
     unsigned int averageNewCustomersPerInterval; /* average whole number of customers per time interval */
     unsigned int averageTimeTakenToServeCustomer; /* number of time intervals between arrival and being served */
@@ -95,7 +102,7 @@ int main(int argc, char **argv)
 
     if ( readInputFile(&maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
                   &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval) )
-                  exit(-2);
+                  exit(-3);
 
     printf("maxQueueLength: %d\n", maxQueueLength);
     printf("numServicePoints: %u\n", numServicePoints);
