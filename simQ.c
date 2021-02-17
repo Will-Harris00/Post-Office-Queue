@@ -105,9 +105,9 @@ int main()
     static int notAllEmpty = 1;
 
     while ( ((q->front) != NULL) || notAllEmpty )
-    {
-        checkFinishedServing(servicePoints, numServicePoints, q);
+    {   
         notAllEmpty = !( checkAllSPEmpty(servicePoints, numServicePoints) );
+        checkFinishedServing(servicePoints, numServicePoints, q);
         /* there are only three service points two customer waits in the queue */
     }
 }
@@ -120,14 +120,7 @@ struct customer* newNode(int custId, int patience)
 {
     struct customer* temp = (C*)malloc(sizeof(C));
     temp->customerId = custId;
-    if ( custId == 4 || custId == 5 )
-    {
-        temp->patience = 0;
-    }
-    else
-    {
-        temp->patience = 1;
-    }
+    temp->patience = 1;
     temp->timeElapsed = 0;
     temp->next = NULL;
     return temp;
@@ -183,13 +176,13 @@ void deQueue(struct queue* q)
 /* function to check all service points are empty */
 int checkAllSPEmpty(SP* servicePoints, int numServicePoints)
 {   
-    int allEmpty = 0;
+    int allEmpty = 1;
     int x;
     for ( x = 0; x < numServicePoints; x++ )
     {
-        if ( (servicePoints[x].serving) == NULL )
+        if ( (servicePoints[x].serving) != NULL )
         {
-            allEmpty = 1;
+            allEmpty = 0;
         }
     }
     return allEmpty;
