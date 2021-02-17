@@ -72,10 +72,10 @@ char fileIn[1]; /* input file name containing parameters */
 char fileOut[1]; /* output file name where results are to be stored */
 
 /* read these in from the input file and delete all global variables */
-int averageNewCustomersPerInterval; /* average whole number of customers per time interval */
+int averageNewCustomersPerInterval = 3; /* average whole number of customers per time interval */
 int averageTimeTakenToServeCustomer = 5; /* number of time intervals between arrival and being served */
 int averageWaitingToleranceOfCustomer = 5; /* average waiting time before customer leaves unfulfilled */
-int closingTime; /* time units until post office closes and no new customer can join the queue */
+int closingTime = 20; /* time units until post office closes and no new customer can join the queue */
 int numServicePoints = 3; /* the number of service points at the post office */
 int maxQueueLength = 5; /* the maximum number of customers waiting in the queue */
 /* can be -1 if the queue has no maximum length */
@@ -89,17 +89,27 @@ int main()
 
     SP* servicePoints = createServicePoints(numServicePoints);
     
-    /* here we generate four customers to add to the queue */
+    int timeUnits = 0;
     int count = 0;
-    while ( count < maxQueueLength )
-    {
-        enQueue(q);
-        count = getCount(q->front);
-    }
-    printf("Count: %d\n\n", count);
-    fflush(stdout);
+    int notAllEmpty = 0;
+    while ( timeUnits < closingTime )
+    {   
+        if ( timeUnits < closingTime )
+        {
+            int j;
+            for ( j = 0; j < averageNewCustomersPerInterval; j++ )
+            {
+                if ( count < maxQueueLength )
+                {
+                    enQueue(q);
+                    count = getCount(q->front);
+                }
+            }
+            printf("Count: %d\n\n", count);
+        }
 
-    static int notAllEmpty = 1;
+        timeUnits++;
+    }
 
     while ( ((q->front) != NULL) || notAllEmpty )
     {   
