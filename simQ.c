@@ -54,36 +54,49 @@ SP *createServicePoints(unsigned int);
 struct customer* newNode(unsigned int, unsigned int);
 
 struct queue* createQueue();
-void enQueue(struct queue*);
+void enQueue(struct queue*, int);
 void deQueue(struct queue*);
 int getCount(struct customer*);
 
-void checkFinishedServing(SP*, unsigned int, struct queue*);
+void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int);
 void checkPatienceLimit(struct customer**);
 int checkAllSPEmpty(SP*, unsigned int);
+
+int readInputFile(int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *);
 
 
 /* no global variables allowed in final version */
 
 /* read these in from the command line and delete all global variables */
-unsigned int numSims; /* the number of times the simulatio must be repeated */
+unsigned int numSims; /* the number of times the simulation must be repeated */
 /* add function prototype definitions here */
 char fileIn[1]; /* input file name containing parameters */
 char fileOut[1]; /* output file name where results are to be stored */
 
-/* read these in from the input file and delete all global variables */
-unsigned int averageNewCustomersPerInterval = 3; /* average whole number of customers per time interval */
-unsigned int averageTimeTakenToServeCustomer = 5; /* number of time intervals between arrival and being served */
-unsigned int averageWaitingToleranceOfCustomer = 5; /* average waiting time before customer leaves unfulfilled */
-unsigned int closingTime = 20; /* time units until post office closes and no new customer can join the queue */
-unsigned int numServicePoints = 3; /* the number of service points at the post office */
-unsigned int maxQueueLength = 5; /* the maximum number of customers waiting in the queue */
-/* can be -1 if the queue has no maximum length */
-
 
 /* main function ------------------------------------ */
 int main()
-{
+{   
+    /* read these in from the input file */
+    unsigned int averageNewCustomersPerInterval; /* average whole number of customers per time interval */
+    unsigned int averageTimeTakenToServeCustomer; /* number of time intervals between arrival and being served */
+    unsigned int averageWaitingToleranceOfCustomer; /* average waiting time before customer leaves unfulfilled */
+    unsigned int closingTime; /* time units until post office closes and no new customer can join the queue */
+    unsigned int numServicePoints; /* the number of service points at the post office */
+    int maxQueueLength; /* the maximum number of customers waiting in the queue */
+    /* can be -1 if the queue has no maximum length */
+
+    if ( readInputFile(&maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
+                  &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval) )
+                  exit(-1);
+
+    printf("maxQueueLength: %d\n", maxQueueLength);
+    printf("numServicePoints: %u\n", numServicePoints);
+    printf("closingTime: value: %u\n", closingTime);
+    printf("averageNewCustomersPerInterval: %u\n", averageNewCustomersPerInterval);
+    printf("averageTimeTakenToServeCustomer: %u\n", averageTimeTakenToServeCustomer);
+    printf("averageWaitingToleranceOfCustomer: %u\n", averageWaitingToleranceOfCustomer);
+
     /* initialise an empty list to use as our queue */
     struct queue* q = createQueue();
 
@@ -99,7 +112,7 @@ int main()
         if ( (q->front) != NULL || notAllEmpty )
         {
             /* assigned waiting customer to service points and remove fufilled customers */
-            checkFinishedServing(servicePoints, numServicePoints, q);
+            checkFinishedServing(servicePoints, q, numServicePoints, averageTimeTakenToServeCustomer);
             
             /* remove all nodes that have zero patience remaining */
             checkPatienceLimit(&q->front);
@@ -116,7 +129,7 @@ int main()
                 count = getCount(q->front);
                 if ( count < maxQueueLength )
                 {
-                    enQueue(q);
+                    enQueue(q, averageWaitingToleranceOfCustomer);
                 }
             }
             printf("Count: %d\n\n", count);
@@ -164,11 +177,11 @@ struct queue* createQueue()
 }
 
 /* function to add a customer to the queue */
-void enQueue(struct queue* q)
+void enQueue(struct queue* q, int patience)
 {   
     static unsigned int custId = 1;
     /* Create a new LL node */
-    struct customer* temp = newNode(custId, averageWaitingToleranceOfCustomer); 
+    struct customer* temp = newNode(custId, patience); 
     custId++;
 
     /* If queue is empty, then new node is front and rear both */
@@ -229,22 +242,22 @@ int getCount(struct customer* head)
 } 
 
 
-SP* createServicePoints(unsigned int numServicePoints)
+SP* createServicePoints(unsigned int numSP)
 {
     unsigned int x;
-    SP* servicePoints = malloc(numServicePoints * sizeof *servicePoints); /* servicePoints is an array of pointers to SP structures */
+    SP* servicePoints = malloc(numSP * sizeof *servicePoints); /* servicePoints is an array of pointers to SP structures */
     printf("Size of servicePoints pointer: %d\n",sizeof servicePoints);
     fflush(stdout);
     printf("Location of the pointer servicePoints: %p\n",&servicePoints);
     fflush(stdout);
-    for ( x = 0; x < numServicePoints; x++ )
+    for ( x = 0; x < numSP; x++ )
     {
         servicePoints[x].servicePointId = x + 1;
         servicePoints[x].timeTillFinished = 0;
         servicePoints[x].serving = NULL;
     }
 
-    for ( x = 0; x < numServicePoints; x++ )
+    for ( x = 0; x < numSP; x++ )
     {
         printf("SP identifier: %i\n",servicePoints[x].servicePointId);
         fflush(stdout);
@@ -252,10 +265,10 @@ SP* createServicePoints(unsigned int numServicePoints)
     return servicePoints;
 }
 
-void checkFinishedServing(SP* servicePoints, unsigned int numServicePoints, struct queue* q)
+void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP, unsigned int servingTime)
 {   
     unsigned int x;
-    for ( x = 0; x < numServicePoints; x++ )
+    for ( x = 0; x < numSP; x++ )
     {   
         printf("\nService Point: %d\n", servicePoints[x].servicePointId);
         fflush(stdout);
@@ -267,7 +280,7 @@ void checkFinishedServing(SP* servicePoints, unsigned int numServicePoints, stru
             if ( q->front != NULL )
             {
                 servicePoints[x].serving = q->front;
-                servicePoints[x].timeTillFinished = averageTimeTakenToServeCustomer;
+                servicePoints[x].timeTillFinished = servingTime;
                 printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
                 fflush(stdout);
                 deQueue(q);
@@ -292,7 +305,7 @@ void checkFinishedServing(SP* servicePoints, unsigned int numServicePoints, stru
                 if ( q->front != NULL )
                 {
                     servicePoints[x].serving = q->front;
-                    servicePoints[x].timeTillFinished = averageTimeTakenToServeCustomer;
+                    servicePoints[x].timeTillFinished = servingTime;
                     printf("\nFront of Queue: %d\n", q->front->customerId);
                     fflush(stdout);
                     printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
@@ -346,4 +359,50 @@ void checkPatienceLimit(struct customer** head_ref)
         /* Update temp for next iteration of outer loop */
         temp = prev->next;
     }
+}
+
+
+/* functions to manage reading input file */
+
+int readInputFile(int *maxQueueLength, unsigned int *numServicePoints, unsigned int *closingTime, unsigned int *averageWaitingToleranceOfCustomer, 
+                  unsigned int *averageTimeTakenToServeCustomer, unsigned int *averageNewCustomersPerInterval)
+{
+    FILE *fp;
+    char varName[51];
+
+    /* short int is not big enough so would overwrite
+       the start of name and cause to terminate early */
+
+    fp = fopen("input.txt", "r");
+    if ( fp==NULL )
+    {
+        fprintf(stderr, "File not openable\n");
+        return -1;
+    }
+
+    while ( !feof(fp) )
+    {
+        if ( fscanf(fp, "%s %d\n%s %u\n%s %u\n%s %u\n%s %u\n%s %u\n",
+                                   varName,
+                                   maxQueueLength,
+                                   varName,
+                                   numServicePoints,
+                                   varName,
+                                   closingTime,
+                                   varName,
+                                   averageNewCustomersPerInterval,
+                                   varName,
+                                   averageTimeTakenToServeCustomer,
+                                   varName,
+                                   averageWaitingToleranceOfCustomer) != 12 )
+        {
+            fprintf(stderr,"File format invalid\n");
+            fclose(fp);
+            return -2;
+        }
+    }
+
+    fclose(fp);
+
+    return 0;
 }
