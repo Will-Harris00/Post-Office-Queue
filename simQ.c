@@ -73,8 +73,8 @@ char fileOut[1]; /* output file name where results are to be stored */
 
 /* read these in from the input file and delete all global variables */
 int averageNewCustomersPerInterval; /* average whole number of customers per time interval */
-int averageTimeTakenToServeCustomer; /* number of time intervals between arrival and being served */
-int averageWaitingToleranceOfCustomer; /* average waiting time before customer leaves unfulfilled */
+int averageTimeTakenToServeCustomer = 5; /* number of time intervals between arrival and being served */
+int averageWaitingToleranceOfCustomer = 5; /* average waiting time before customer leaves unfulfilled */
 int closingTime; /* time units until post office closes and no new customer can join the queue */
 int numServicePoints = 3; /* the number of service points at the post office */
 int maxQueueLength = 5; /* the maximum number of customers waiting in the queue */
@@ -141,7 +141,7 @@ void enQueue(struct queue* q)
 {   
     static int custId = 1;
     /* Create a new LL node */
-    struct customer* temp = newNode(custId, 2); 
+    struct customer* temp = newNode(custId, averageWaitingToleranceOfCustomer); 
     custId++;
 
     /* If queue is empty, then new node is front and rear both */
@@ -238,7 +238,7 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
             if ( q->front != NULL )
             {
                 servicePoints[x].serving = q->front;
-                servicePoints[x].timeTillFinished = 5;
+                servicePoints[x].timeTillFinished = averageTimeTakenToServeCustomer;
                 printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
                 fflush(stdout);
                 deQueue(q);
@@ -262,7 +262,7 @@ void checkFinishedServing(SP* servicePoints, int numServicePoints, struct queue*
                 if ( q->front != NULL )
                 {
                     servicePoints[x].serving = q->front;
-                    servicePoints[x].timeTillFinished = 5;
+                    servicePoints[x].timeTillFinished = averageTimeTakenToServeCustomer;
                     printf("\nFront of Queue: %d\n", q->front->customerId);
                     fflush(stdout);
                     printf("\nService Point: %d\n", servicePoints[x].servicePointId);
