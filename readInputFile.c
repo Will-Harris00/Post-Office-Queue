@@ -17,8 +17,7 @@ int main()
     /* short int is not big enough so would overwrite
        the start of name and cause to terminate early */
 
-    fp = fopen("input.txt", "r");
-    if ( fp==NULL )
+    if ( (fp = fopen("testInput.txt", "r")) == NULL )
     {
         fprintf(stderr, "File not openable\n");
         return -1;

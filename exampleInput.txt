@@ -1,0 +1,13 @@
+# The format of this file is up to you, but think about the way you structure it
+# to make it easy to understand and use, without making it hard for your program
+# to read.
+
+# The standard parameters, as described in the specification:
+maxQueueLength 20
+numServicePoints 3
+closingTime 100
+
+# Parameters added by you, for example:
+averageNewCustomersPerInterval 3
+averageTimeTakenToServeCustomer 5
+averageWaitingToleranceOfCustomer 8
