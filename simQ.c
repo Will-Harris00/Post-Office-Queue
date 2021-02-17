@@ -62,7 +62,7 @@ void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int);
 void checkPatienceLimit(struct customer**);
 int checkAllSPEmpty(SP*, unsigned int);
 
-int readInputFile(int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *);
+int readInputFile(char*, int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *);
 
 
 /* main function ------------------------------------ */
@@ -90,7 +90,6 @@ int main(int argc, char **argv)
     printf("numSims: %d\n", numSims);
     printf("fileOut: %s\n", fileOut);
 
-    exit(0);
     /* read these in from the input file */
     unsigned int averageNewCustomersPerInterval; /* average whole number of customers per time interval */
     unsigned int averageTimeTakenToServeCustomer; /* number of time intervals between arrival and being served */
@@ -100,7 +99,7 @@ int main(int argc, char **argv)
     int maxQueueLength; /* the maximum number of customers waiting in the queue */
     /* can be -1 if the queue has no maximum length */
 
-    if ( readInputFile(&maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
+    if ( readInputFile(fileIn, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
                   &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval) )
                   exit(-3);
 
@@ -378,13 +377,13 @@ void checkPatienceLimit(struct customer** head_ref)
 
 /* functions to manage reading input file */
 
-int readInputFile(int *maxQueueLength, unsigned int *numServicePoints, unsigned int *closingTime, unsigned int *averageWaitingToleranceOfCustomer, 
+int readInputFile(char* fileIn, int *maxQueueLength, unsigned int *numServicePoints, unsigned int *closingTime, unsigned int *averageWaitingToleranceOfCustomer, 
                   unsigned int *averageTimeTakenToServeCustomer, unsigned int *averageNewCustomersPerInterval)
 {
     FILE *fp;
     char varName[51];
 
-    if ( (fp = fopen("testInput.txt", "r")) == NULL )
+    if ( (fp = fopen(fileIn, "r")) == NULL )
     {
         fprintf(stderr, "File not openable\n");
         return -1;
