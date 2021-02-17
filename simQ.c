@@ -91,9 +91,9 @@ int main()
     
     int timeUnits = 0;
     int notAllEmpty = 0;
+    int count = 0;
     while ( timeUnits < closingTime || (q->front) != NULL || notAllEmpty)
-    {   
-        int count = 0;
+    {
         printf("Time units: %d\n", timeUnits);
 
         if ( (q->front) != NULL || notAllEmpty )
@@ -112,14 +112,15 @@ int main()
         {
             int j;
             for ( j = 0; j < averageNewCustomersPerInterval; j++ )
-            {
+            {   
+                count = getCount(q->front);
                 if ( count < maxQueueLength )
                 {
                     enQueue(q);
-                    count = getCount(q->front);
                 }
             }
             printf("Count: %d\n\n", count);
+            fflush(stdout);
         }
 
         timeUnits++;
