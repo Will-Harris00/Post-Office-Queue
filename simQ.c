@@ -5,6 +5,8 @@
 #include <string.h> /* string manipulation */
 #include <gsl/gsl_rng.h> /* gsl library */
 #include <gsl/gsl_randist.h> /* more gsl library */
+#include <simQ.h>
+
 
 /*
 At each time interval the following happens or may happen, in this order:
@@ -61,8 +63,6 @@ int getCount(struct customer*);
 void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int);
 void checkPatienceLimit(struct customer**);
 int checkAllSPEmpty(SP*, unsigned int);
-
-int readInputFile(char*, int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *);
 
 
 /* main function ------------------------------------ */
@@ -377,46 +377,4 @@ void checkPatienceLimit(struct customer** head_ref)
         /* Update temp for next iteration of outer loop */
         temp = prev->next;
     }
-}
-
-
-/* functions to manage reading input file */
-
-int readInputFile(char* fileIn, int *maxQueueLength, unsigned int *numServicePoints, unsigned int *closingTime, unsigned int *averageWaitingToleranceOfCustomer, 
-                  unsigned int *averageTimeTakenToServeCustomer, unsigned int *averageNewCustomersPerInterval)
-{
-    FILE *fp;
-    char varName[51];
-
-    if ( (fp = fopen(fileIn, "r")) == NULL )
-    {
-        fprintf(stderr, "File not openable\n");
-        return -1;
-    }
-
-    while ( !feof(fp) )
-    {
-        if ( fscanf(fp, "%s %d\n%s %u\n%s %u\n%s %u\n%s %u\n%s %u\n",
-                                   varName,
-                                   maxQueueLength,
-                                   varName,
-                                   numServicePoints,
-                                   varName,
-                                   closingTime,
-                                   varName,
-                                   averageNewCustomersPerInterval,
-                                   varName,
-                                   averageTimeTakenToServeCustomer,
-                                   varName,
-                                   averageWaitingToleranceOfCustomer) != 12 )
-        {
-            fprintf(stderr,"File format invalid\n");
-            fclose(fp);
-            return -2;
-        }
-    }
-
-    fclose(fp);
-
-    return 0;
 }

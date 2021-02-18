@@ -1,3 +1,4 @@
-gcc -ansi -c simQ.c -o simQ.o
-gcc simQ.o -o simQ -lgsl -lgslcblas
+gcc -ansi -c simQ.c -I./ -o simQ.o
+gcc -ansi -c readInputFile.c -I./ -o readInputFile.o 
+gcc readInputFile.o simQ.o -o simQ -lgsl -lgslcblas
 ./simQ testInput.txt 2 testOutput.txt
