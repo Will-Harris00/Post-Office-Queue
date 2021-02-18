@@ -1,0 +1,3 @@
+gcc -ansi -c simQ.c -o simQ.o
+gcc simQ.o -o simQ -lgsl -lgslcblas
+./simQ testInput.txt 2 testOutput.txt
