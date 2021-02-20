@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     if ( argc != 4 )
     {
         fprintf(stderr, "Invalid number of arguments\n");
-        exit(-4);
+        exit(-2);
     }
 
 
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
     if ( numSims < 1 )
     {
         fprintf(stderr, "Invalid number of simulations\n");
-        exit(-2);
+        exit(-4);
     }
 
     printf("fileIn: %s\n", fileIn);

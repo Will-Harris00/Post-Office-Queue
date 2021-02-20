@@ -39,6 +39,32 @@ int readInputFile(char* fileIn, int *maxQueueLength, unsigned int *numServicePoi
         }
     }
     printf("Successfully loaded parameters\n");
+
+    if ( *maxQueueLength < -1 )
+    {
+        fprintf(stderr, "Invalid max queue length\n");
+        exit(-5);
+    }
+    if ( *numServicePoints < 1 )
+    {
+        fprintf(stderr, "Invalid number of service points\n");
+        exit(-6);
+    }
+    if ( *closingTime < 1 )
+    {
+        fprintf(stderr, "Invalid closing time\n");
+        exit(-7);
+    }
+    if ( *averageNewCustomersPerInterval < 1 )
+    {
+        fprintf(stderr, "Invalid number of new customers per interval\n");
+        exit(-8);
+    }
+    if ( *averageWaitingToleranceOfCustomer < 1 )
+    {
+        fprintf(stderr, "Invalid customer waiting tolerance\n");
+        exit(-9);
+    }
     fclose(fp);
 
     return 0;
