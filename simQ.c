@@ -119,7 +119,7 @@ int main(int argc, char **argv)
             for ( j = 0; j < averageNewCustomersPerInterval; j++ )
             {   
                 count = getCount(q->front);
-                if ( count < maxQueueLength )
+                if ( count < maxQueueLength || maxQueueLength == -1 )
                 {
                     enQueue(q, averageWaitingToleranceOfCustomer);
                 }
