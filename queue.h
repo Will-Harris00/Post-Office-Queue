@@ -10,7 +10,7 @@
 struct customerNode {
     unsigned int customerId; /* unique id assigned to each customer in order of arrival */
     unsigned int patience; /* time before getting bored and leaving the queue */
-    unsigned int timeElapsed; /* time before being served at service point */
+    unsigned int timeElapsed; /* total time until being served at service point */
     struct customerNode* next;
 };
 

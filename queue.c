@@ -15,7 +15,7 @@ struct customerNode* newNode(unsigned int custId, unsigned int patience)
 
     temp->customerId = custId;
     temp->patience = patience;
-    temp->timeElapsed = 0;
+    temp->timeElapsed = patience;
     temp->next = NULL;
     return temp;
 }
