@@ -1,4 +1,5 @@
 gcc -ansi -c simQ.c -I./ -o simQ.o
+gcc -ansi -c queue.c -I./ -o queue.o 
 gcc -ansi -c readInputFile.c -I./ -o readInputFile.o 
-gcc readInputFile.o simQ.o -o simQ -lgsl -lgslcblas
+gcc readInputFile.o queue.o simQ.o -o simQ -lgsl -lgslcblas
 ./simQ testInput.txt 2 testOutput.txt
