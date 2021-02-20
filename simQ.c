@@ -39,8 +39,8 @@ typedef struct servicePoint SP;
 /* function prototypes ------------------------------ */
 SP *createServicePoints(unsigned int);
 
-void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int);
-void checkPatienceLimit(struct customerNode**, unsigned int *);
+void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int, unsigned int*);
+void checkPatienceLimit(struct customerNode**, unsigned int*);
 int checkAllSPEmpty(SP*, unsigned int);
 
 
@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 
     /* simulation statistics */
     unsigned int unfulfilled = 0; /* count unfulfilled customers*/
-    unsigned int fulfilled; /* count fulfilled customers */
+    unsigned int fulfilled = 0; /* count fulfilled customers */
     unsigned int totalTimeIncUnfulfilled; /* count collective time elapsed of all custoemrs */
     unsigned int totalimeOnlyFulfilled; /* count collective time elapsed of only server customers */
 
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
         if ( (q->front) != NULL || notAllEmpty )
         {
             /* assigned waiting customer to service points and remove fulfilled customers */
-            checkFinishedServing(servicePoints, q, numServicePoints, averageTimeTakenToServeCustomer);
+            checkFinishedServing(servicePoints, q, numServicePoints, averageTimeTakenToServeCustomer, &fulfilled);
             
             /* remove all nodes that have zero patience remaining */
             checkPatienceLimit(&q->front, &unfulfilled);
@@ -144,6 +144,7 @@ int main(int argc, char **argv)
     /* calculate seconds from closing time till finished serving all customers in queue */
     printf("Time after closing finished serving: %u\n", (timeUnits-closingTime));
     printf("Unfulfilled customers: %u\n", unfulfilled);
+    printf("Fulfilled customers: %u\n", fulfilled);
 }
 
 
@@ -191,7 +192,7 @@ SP* createServicePoints(unsigned int numSP)
     return servicePoints;
 }
 
-void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP, unsigned int servingTime)
+void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP, unsigned int servingTime, unsigned int *fulfilled)
 {   
     unsigned int x;
     for ( x = 0; x < numSP; x++ )
@@ -209,6 +210,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
                 servicePoints[x].timeTillFinished = servingTime;
                 printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
                 fflush(stdout);
+                ++(*fulfilled); /* increment fulfilled customers when no existing customer is being served */
                 deQueue(q);
                 continue; /* ensures waiting tolerance limit is not decremented for newly served customer */
             }
@@ -236,6 +238,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
                     fflush(stdout);
                     printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
                     fflush(stdout);
+                    ++(*fulfilled); /* increment fulfilled customers when finished being served */
                     deQueue(q);
                 }
             }
