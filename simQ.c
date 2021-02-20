@@ -40,7 +40,7 @@ typedef struct servicePoint SP;
 SP *createServicePoints(unsigned int);
 
 void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int);
-void checkPatienceLimit(struct customerNode**);
+void checkPatienceLimit(struct customerNode**, unsigned int *);
 int checkAllSPEmpty(SP*, unsigned int);
 
 
@@ -90,11 +90,10 @@ int main(int argc, char **argv)
     printf("averageWaitingToleranceOfCustomer: %u\n\n", averageWaitingToleranceOfCustomer);
 
     /* simulation statistics */
-    unsigned int unfulilled; /* count unfufulled customers*/
-    unsigned int fufilled; /* count fufilled customers */
-    unsigned int timeSinceClosed; /* count seconds from closing time till finished serving all customers in queue */
-    unsigned int totalTimeIncUnfufilled; /* count collective time elapsed of all custoemrs */
-    unsigned int totalimeOnlyFufilled; /* count collective time elapsed of only server customers */
+    unsigned int unfulfilled = 0; /* count unfulfilled customers*/
+    unsigned int fulfilled; /* count fulfilled customers */
+    unsigned int totalTimeIncUnfulfilled; /* count collective time elapsed of all custoemrs */
+    unsigned int totalimeOnlyFulfilled; /* count collective time elapsed of only server customers */
 
     /* initialise an empty list to use as our queue */
     struct queue* q = createQueue();
@@ -110,11 +109,11 @@ int main(int argc, char **argv)
 
         if ( (q->front) != NULL || notAllEmpty )
         {
-            /* assigned waiting customer to service points and remove fufilled customers */
+            /* assigned waiting customer to service points and remove fulfilled customers */
             checkFinishedServing(servicePoints, q, numServicePoints, averageTimeTakenToServeCustomer);
             
             /* remove all nodes that have zero patience remaining */
-            checkPatienceLimit(&q->front);
+            checkPatienceLimit(&q->front, &unfulfilled);
 
             /* check if customers are still being served */
             notAllEmpty = !( checkAllSPEmpty(servicePoints, numServicePoints) );
@@ -125,11 +124,11 @@ int main(int argc, char **argv)
             unsigned int j;
             for ( j = 0; j < averageNewCustomersPerInterval; j++ )
             {   
-                count = getCount(q->front);
                 if ( count < maxQueueLength || maxQueueLength == -1 )
-                {
                     enQueue(q, averageWaitingToleranceOfCustomer);
-                }
+                else
+                    ++(unfulfilled); /* increment unfulfilled customers when they attempt to join a full queue */
+                count = getCount(q->front); /* we initialised count to zero so no need to get count on first iteration */
             }
             printf("Count: %d\n\n", count);
             fflush(stdout);
@@ -137,9 +136,14 @@ int main(int argc, char **argv)
 
         timeUnits++;
     }
-    
+
+    printf("\n\nEnd time: %u\n\n", timeUnits);
     free(servicePoints);
     free(q);
+
+    /* calculate seconds from closing time till finished serving all customers in queue */
+    printf("Time after closing finished serving: %u\n", (timeUnits-closingTime));
+    printf("Unfulfilled customers: %u\n", unfulfilled);
 }
 
 
@@ -240,7 +244,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
 }
 
 
-void checkPatienceLimit(struct customerNode** head_ref)
+void checkPatienceLimit(struct customerNode** head_ref, unsigned int *unfulfilled)
 {   
     /* Store rear (head) node */
     struct customerNode *temp = *head_ref, *prev;
@@ -250,6 +254,7 @@ void checkPatienceLimit(struct customerNode** head_ref)
     {
         printf("Removed customer: %d\n", temp->customerId);
         fflush(stdout);
+        ++(*unfulfilled);
 
         *head_ref = temp->next; /* Changed head */
         free(temp); /* free old head */
