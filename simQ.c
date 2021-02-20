@@ -90,10 +90,10 @@ int main(int argc, char **argv)
     printf("averageWaitingToleranceOfCustomer: %u\n\n", averageWaitingToleranceOfCustomer);
 
     /* simulation statistics */
+    unsigned int timedOut = 0;
     unsigned int unfulfilled = 0; /* count unfulfilled customers*/
     unsigned int fulfilled = 0; /* count fulfilled customers */
-    unsigned int totalTimeIncUnfulfilled; /* count collective time elapsed of all custoemrs */
-    unsigned int totalimeOnlyFulfilled; /* count collective time elapsed of only server customers */
+    unsigned int totalWaitTime; /* count collective wait time elapsed of all customers */
 
     /* initialise an empty list to use as our queue */
     struct queue* q = createQueue();
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
             checkFinishedServing(servicePoints, q, numServicePoints, averageTimeTakenToServeCustomer, &fulfilled);
             
             /* remove all nodes that have zero patience remaining */
-            checkPatienceLimit(&q->front, &unfulfilled);
+            checkPatienceLimit(&q->front, &timedOut);
 
             /* check if customers are still being served */
             notAllEmpty = !( checkAllSPEmpty(servicePoints, numServicePoints) );
@@ -143,6 +143,7 @@ int main(int argc, char **argv)
 
     /* calculate seconds from closing time till finished serving all customers in queue */
     printf("Time after closing finished serving: %u\n", (timeUnits-closingTime));
+    printf("Timed-out customers: %u\n", timedOut);
     printf("Unfulfilled customers: %u\n", unfulfilled);
     printf("Fulfilled customers: %u\n", fulfilled);
 }
@@ -247,7 +248,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
 }
 
 
-void checkPatienceLimit(struct customerNode** head_ref, unsigned int *unfulfilled)
+void checkPatienceLimit(struct customerNode** head_ref, unsigned int *timedOut)
 {   
     /* Store rear (head) node */
     struct customerNode *temp = *head_ref, *prev;
@@ -257,7 +258,7 @@ void checkPatienceLimit(struct customerNode** head_ref, unsigned int *unfulfille
     {
         printf("Removed customer: %d\n", temp->customerId);
         fflush(stdout);
-        ++(*unfulfilled);
+        ++(*timedOut);
 
         *head_ref = temp->next; /* Changed head */
         free(temp); /* free old head */
