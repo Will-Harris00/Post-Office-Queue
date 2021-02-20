@@ -27,41 +27,40 @@ queue is full, leave the system as an unfulfilled customer.
 /*----- structure definitions  ---------------------- */
 
 /* A linked list node to store a customer queue entry */
-struct customer {
+struct customerNode {
     unsigned int customerId; /* unique id assigned to each customer in order of arrival */
     unsigned int patience; /* time before getting bored and leaving the queue */
     unsigned int timeElapsed; /* time before being served at service point */
-    struct customer* next;
+    struct customerNode* next;
 };
 
-typedef struct customer C;
+typedef struct customerNode CN;
 
 struct servicePoint {
     unsigned int servicePointId; /* unique id assigned to each service point */
     unsigned int timeTillFinished; /* time units until customer has finished being served*/
-    struct customer *serving; /* pointer to the customer currently being served */
+    struct customerNode *serving; /* pointer to the customer currently being served */
 };
 
 typedef struct servicePoint SP;
 
-/* The queue, front stores the customer at the front and rear
-   stores the last customer */
+/* The queue, front stores the customer at the front and rear stores the last customer */
 struct queue { 
-    struct customer *front, *rear; /* head, tail respectively */
+    struct customerNode *front, *rear; /* head, tail respectively */
 };
 
 
 /* function prototypes ------------------------------ */
 SP *createServicePoints(unsigned int);
-struct customer* newNode(unsigned int, unsigned int);
+CN* newNode(unsigned int, unsigned int);
 
 struct queue* createQueue();
 void enQueue(struct queue*, int);
 void deQueue(struct queue*);
-int getCount(struct customer*);
+int getCount(struct customerNode*);
 
 void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int);
-void checkPatienceLimit(struct customer**);
+void checkPatienceLimit(struct customerNode**);
 int checkAllSPEmpty(SP*, unsigned int);
 
 
@@ -70,8 +69,8 @@ int main(int argc, char **argv)
 {
     if ( argc != 4 )
     {
-        fprintf(stderr,"Invalid number of arguments\n");
-        exit(-1);
+        fprintf(stderr, "Invalid number of arguments\n");
+        exit(-4);
     }
 
 
@@ -82,13 +81,13 @@ int main(int argc, char **argv)
 
     if ( numSims < 1 )
     {
-        fprintf(stderr,"Invalid number of simulations\n");
+        fprintf(stderr, "Invalid number of simulations\n");
         exit(-2);
     }
 
     printf("fileIn: %s\n", fileIn);
     printf("numSims: %d\n", numSims);
-    printf("fileOut: %s\n", fileOut);
+    printf("fileOut: %s\n\n", fileOut);
 
     /* read these in from the input file */
     unsigned int averageNewCustomersPerInterval; /* average whole number of customers per time interval */
@@ -108,7 +107,7 @@ int main(int argc, char **argv)
     printf("closingTime: value: %u\n", closingTime);
     printf("averageNewCustomersPerInterval: %u\n", averageNewCustomersPerInterval);
     printf("averageTimeTakenToServeCustomer: %u\n", averageTimeTakenToServeCustomer);
-    printf("averageWaitingToleranceOfCustomer: %u\n", averageWaitingToleranceOfCustomer);
+    printf("averageWaitingToleranceOfCustomer: %u\n\n", averageWaitingToleranceOfCustomer);
 
     /* initialise an empty list to use as our queue */
     struct queue* q = createQueue();
@@ -160,13 +159,13 @@ int main(int argc, char **argv)
 /* functions to manage the queue */
 
 /* utility function to create a new linked list node. */
-struct customer* newNode(unsigned int custId, unsigned int patience)
+struct customerNode* newNode(unsigned int custId, unsigned int patience)
 {   
-    struct customer* temp;
-    if ( !( temp = (C *)malloc(sizeof(C)) ) ) /* check memory assignment */
+    struct customerNode* temp;
+    if ( !( temp = (CN *)malloc(sizeof(CN)) ) ) /* check memory assignment */
     {
-        printf("Out of memory\n");
-        exit(1);
+        fprintf(stderr, "Out of memory\n");
+        exit(-1);
     }
 
     temp->customerId = custId;
@@ -182,19 +181,19 @@ struct queue* createQueue()
     struct queue* q;
     if ( !( q = (struct queue*)malloc(sizeof(struct queue)) ) ) /* check memory assignment */
     {
-        printf("Out of memory\n");
-        exit(1);
+        fprintf(stderr, "Out of memory\n");
+        exit(-1);
     }
     q->front = q->rear = NULL; 
     return q;
 }
 
-/* function to add a customer to the queue */
+/* function to add a customerNode to the queue */
 void enQueue(struct queue* q, int patience)
 {   
     static unsigned int custId = 1;
     /* Create a new LL node */
-    struct customer* temp = newNode(custId, patience); 
+    struct customerNode* temp = newNode(custId, patience); 
     custId++;
 
     /* If queue is empty, then new node is front and rear both */
@@ -209,7 +208,7 @@ void enQueue(struct queue* q, int patience)
     q->rear = temp;
 }
 
-/* function to remove a customer from the queue */
+/* function to remove a customerNode from the queue */
 void deQueue(struct queue* q)
 {
     /* If queue is empty, return NULL. */
@@ -217,7 +216,7 @@ void deQueue(struct queue* q)
         return; 
 
     /* Store previous front and move front one node ahead */
-    struct customer* temp = q->front;
+    struct customerNode* temp = q->front;
 
     q->front = q->front->next;
 
@@ -244,7 +243,7 @@ int checkAllSPEmpty(SP* servicePoints, unsigned int numServicePoints)
 }
 
 /* function to count number of nodes in queue */
-int getCount(struct customer* head)
+int getCount(struct customerNode* head)
 { 
     /* Base case */
     if ( head == NULL )
@@ -261,8 +260,8 @@ SP* createServicePoints(unsigned int numSP)
     SP* servicePoints; /* servicePoints is an array of pointers to SP structures */
     if ( !( servicePoints = (SP *)malloc(numSP * (sizeof(*servicePoints))) ) ) /* check memory assignment */
     {
-        printf("Out of memory\n");
-        exit(1);
+        fprintf(stderr, "Out of memory\n");
+        exit(-1);
     }
     printf("Size of servicePoints pointer: %d\n", sizeof servicePoints);
     fflush(stdout);
@@ -315,7 +314,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
 
             if ( (servicePoints[x].timeTillFinished) == 0 )
             {   
-                C* tmp; /* declare a temporary pointer to an empty customer struct */
+                CN* tmp; /* declare a temporary pointer to an empty customer struct */
                 tmp = servicePoints[x].serving; /* assign temp so we do not loose track of finished customer */
                 servicePoints[x].serving = NULL; /* remove finished customer from service point */
                 /* free(tmp); */ /* free memory allocated to finished customer struct */
@@ -336,10 +335,10 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
 }
 
 
-void checkPatienceLimit(struct customer** head_ref)
+void checkPatienceLimit(struct customerNode** head_ref)
 {   
     /* Store rear (head) node */
-    struct customer *temp = *head_ref, *prev;
+    struct customerNode *temp = *head_ref, *prev;
  
     /* If the rear (head) node itself has zero patience remaining */
     while ( temp != NULL && temp->patience == 0 )

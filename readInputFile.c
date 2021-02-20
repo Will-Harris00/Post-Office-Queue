@@ -38,7 +38,7 @@ int readInputFile(char* fileIn, int *maxQueueLength, unsigned int *numServicePoi
             return -2;
         }
     }
-
+    printf("Successfully loaded parameters\n");
     fclose(fp);
 
     return 0;
