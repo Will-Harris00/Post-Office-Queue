@@ -7,5 +7,6 @@
 /*----- function prototypes --------------------------------------------------*/
 
 int readInputFile(char*, int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *);
+int validateParameters(int *, unsigned int *, unsigned int *, unsigned int *, unsigned int *);
 
 #endif

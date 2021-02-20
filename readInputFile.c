@@ -5,7 +5,8 @@
 
 /* functions to manage reading input file */
 
-int readInputFile(char* fileIn, int *maxQueueLength, unsigned int *numServicePoints, unsigned int *closingTime, unsigned int *averageWaitingToleranceOfCustomer, 
+int readInputFile(char* fileIn, int *maxQueueLength, unsigned int *numServicePoints,
+                  unsigned int *closingTime, unsigned int *averageWaitingToleranceOfCustomer, 
                   unsigned int *averageTimeTakenToServeCustomer, unsigned int *averageNewCustomersPerInterval)
 {
     FILE *fp;
@@ -40,32 +41,41 @@ int readInputFile(char* fileIn, int *maxQueueLength, unsigned int *numServicePoi
     }
     printf("Successfully loaded parameters\n");
 
+    fclose(fp);
+    if ( validateParameters(maxQueueLength, numServicePoints, closingTime, averageNewCustomersPerInterval, averageNewCustomersPerInterval) )
+        exit(-5);
+
+    return 0;
+}
+
+int validateParameters(int *maxQueueLength, unsigned int *numServicePoints, unsigned int *closingTime,
+                        unsigned int *averageWaitingToleranceOfCustomer, unsigned int *averageNewCustomersPerInterval)
+{
     if ( *maxQueueLength < -1 )
     {
         fprintf(stderr, "Invalid max queue length\n");
-        exit(-5);
+        return -1;
     }
     if ( *numServicePoints < 1 )
     {
         fprintf(stderr, "Invalid number of service points\n");
-        exit(-6);
+        return -1;
     }
     if ( *closingTime < 1 )
     {
         fprintf(stderr, "Invalid closing time\n");
-        exit(-7);
+        return -1;
     }
     if ( *averageNewCustomersPerInterval < 1 )
     {
         fprintf(stderr, "Invalid number of new customers per interval\n");
-        exit(-8);
+        return -1;
     }
     if ( *averageWaitingToleranceOfCustomer < 1 )
     {
         fprintf(stderr, "Invalid customer waiting tolerance\n");
-        exit(-9);
+        return -1;
     }
-    fclose(fp);
 
     return 0;
 }
