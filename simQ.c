@@ -89,6 +89,13 @@ int main(int argc, char **argv)
     printf("averageTimeTakenToServeCustomer: %u\n", averageTimeTakenToServeCustomer);
     printf("averageWaitingToleranceOfCustomer: %u\n\n", averageWaitingToleranceOfCustomer);
 
+    /* simulation statistics */
+    unsigned int unfulilled; /* count unfufulled customers*/
+    unsigned int fufilled; /* count fufilled customers */
+    unsigned int timeSinceClosed; /* count seconds from closing time till finished serving all customers in queue */
+    unsigned int totalTimeIncUnfufilled; /* count collective time elapsed of all custoemrs */
+    unsigned int totalimeOnlyFufilled; /* count collective time elapsed of only server customers */
+
     /* initialise an empty list to use as our queue */
     struct queue* q = createQueue();
 
