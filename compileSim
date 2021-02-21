@@ -1,5 +1,6 @@
 gcc -ansi -c simQ.c -I./ -o simQ.o
-gcc -ansi -c queue.c -I./ -o queue.o 
-gcc -ansi -c readInputFile.c -I./ -o readInputFile.o 
-gcc readInputFile.o queue.o simQ.o -o simQ -lgsl -lgslcblas
+gcc -ansi -c queue.c -I./ -o queue.o
+gcc -ansi -c readInputFile.c -I./ -o readInputFile.o
+gcc -ansi -c randomDistributions.c -I./ -o randomDistributions.o 
+gcc randomDistributions.o readInputFile.o queue.o simQ.o -o simQ -lgsl -lgslcblas
 ./simQ testInput.txt 2 testOutput.txt

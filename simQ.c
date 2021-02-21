@@ -46,7 +46,16 @@ int checkAllSPEmpty(SP*, unsigned int);
 
 /* main function ------------------------------------ */
 int main(int argc, char **argv)
-{
+{   
+    unsigned int n = chooseDistribution(1,1,2);
+    printf("%u\n", (unsigned int)n);
+    n = chooseDistribution(1,1,2);
+    printf("%u\n", (unsigned int)n);
+    n = chooseDistribution(1,1,3);
+    printf("%u\n", (unsigned int)n);
+    n = chooseDistribution(1,1,4);
+    printf("%u\n\n", (unsigned int)n);
+
     if ( argc != 4 )
     {
         fprintf(stderr, "Invalid number of arguments\n");

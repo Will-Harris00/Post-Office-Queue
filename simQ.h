@@ -4,5 +4,6 @@
 #include <stdio.h>
 #include <queue.h>
 #include <readInputFile.h>
+#include <randomDistributions.h>
 
 #endif
