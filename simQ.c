@@ -46,14 +46,17 @@ int checkAllSPEmpty(SP*, unsigned int);
 
 /* main function ------------------------------------ */
 int main(int argc, char **argv)
-{   
-    unsigned int n = chooseDistribution(1,1,2);
+{
+    unsigned int existsGSL = 0;
+    unsigned int n;
+    gsl_rng            *r;
+    n = chooseDistribution(1,1,2, &r, &existsGSL);
     printf("%u\n", (unsigned int)n);
-    n = chooseDistribution(1,1,2);
+    n = chooseDistribution(1,1,2, &r, &existsGSL);
     printf("%u\n", (unsigned int)n);
-    n = chooseDistribution(1,1,3);
+    n = chooseDistribution(1,1,3, &r, &existsGSL);
     printf("%u\n", (unsigned int)n);
-    n = chooseDistribution(1,1,4);
+    n = chooseDistribution(1,1,4, &r, &existsGSL);
     printf("%u\n\n", (unsigned int)n);
 
     if ( argc != 4 )
@@ -152,6 +155,7 @@ int main(int argc, char **argv)
     printf("End time: %u\n\n", timeUnits);
     free(servicePoints);
     free(q);
+    gsl_rng_free(r); /* free the memory allocated to GSL random number generator */
 
     /* calculate seconds from closing time till finished serving all customers in queue */
     printf("Time after closing finished serving: %u\n", (timeUnits-closingTime));

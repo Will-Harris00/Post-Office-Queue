@@ -6,6 +6,6 @@
 
 /*----- function prototypes --------------------------------------------------*/
 
-int chooseDistribution(unsigned int, unsigned int, unsigned int);
+int chooseDistribution(unsigned int, unsigned int, unsigned int, gsl_rng **,unsigned int*);
 
 #endif
