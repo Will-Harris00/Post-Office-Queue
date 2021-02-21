@@ -1,6 +1,5 @@
 #include <queue.h>
 
-
 /* functions to manage the queue */
 
 /* utility function to create a new linked list node. */
