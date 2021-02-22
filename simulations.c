@@ -5,7 +5,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
                     unsigned int *averageTimeTakenToServeCustomer, unsigned int *averageNewCustomersPerInterval)
 {
     unsigned int existsGSL = 0;
-    int n;
+    /* int n; */
     gsl_rng            *r;
 
     /* n = chooseDistribution(1,1,1, &r, &existsGSL); *//* option 1: Uniform/Flat */
@@ -17,6 +17,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     /* n = chooseDistribution(1,1,4, &r, &existsGSL); *//* option 4: Gamma */
     /* printf("%u\n\n", (unsigned int)n); */
 
+    /*
     int i;
     for ( i = 0; i < 5; i++ )
     {
@@ -25,6 +26,8 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         fflush(stdout);
     }
     exit(0);
+    */
+
     unsigned int s = 1;
     /* totals across all simulations */
     unsigned int totalTimedOut = 0;
@@ -53,7 +56,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         unsigned int count = 0;
         while ( timeUnits < (*closingTime) || (q->front) != NULL || notAllEmpty)
         {
-            printf("Time units: %d\n", timeUnits);
+            printf("Time units: %u\n", timeUnits);
             count = getCount(q->front);
             printf("Count: %u\n\n", count);
             fflush(stdout);
@@ -62,7 +65,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
             {
                 /* assigned waiting customer to service points and remove fulfilled customers */
                 checkFinishedServing(servicePoints, q, (*numServicePoints), (*averageTimeTakenToServeCustomer), 
-                                     &fulfilled, &combinedWaitTime);
+                                     &fulfilled, &combinedWaitTime, &r, &existsGSL);
 
                 /* remove all nodes that have zero patience remaining */
                 checkPatienceLimit(&q->front, &timedOut);

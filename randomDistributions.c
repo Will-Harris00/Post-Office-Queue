@@ -1,6 +1,6 @@
 #include <randomDistributions.h>
 
-int chooseDistribution(unsigned int mean, unsigned int standardDeviation, unsigned int distribution, gsl_rng **r, unsigned int *existsGSL)
+unsigned int chooseDistribution(unsigned int mean, unsigned int standardDeviation, unsigned int distribution, gsl_rng **r, unsigned int *existsGSL)
 {
     int n;
     if ( !(*existsGSL) )
@@ -41,5 +41,5 @@ int chooseDistribution(unsigned int mean, unsigned int standardDeviation, unsign
         n = gsl_ran_gamma(*r,1,mean);
     }
 
-    return n;
+    return (unsigned int)n;
 }

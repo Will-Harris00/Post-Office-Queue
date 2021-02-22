@@ -34,7 +34,7 @@ SP* createServicePoints(unsigned int numSP)
 
 /* function to remove customer that have finished being served and assigned new customers from queue */
 void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP, unsigned int avgServingTime, 
-                          unsigned int *fulfilled, unsigned int *combinedWaitTime)
+                          unsigned int *fulfilled, unsigned int *combinedWaitTime, gsl_rng **r, unsigned int *existsGSL)
 {
     unsigned int x;
     unsigned int servingTime;
@@ -50,7 +50,13 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
             if ( q->front != NULL )
             {
                 servicePoints[x].serving = q->front;
-                servicePoints[x].timeTillFinished = avgServingTime;
+                servingTime = chooseDistribution(avgServingTime,2,2, r, existsGSL); /* Normal/Gaussian Distribution: mean avgServingTime, standard deviation 2 */
+
+                printf("%u\n", avgServingTime);
+                printf("%u\n", servingTime);
+                fflush(stdout);
+
+                servicePoints[x].timeTillFinished = servingTime;
                 printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
                 fflush(stdout);
 
@@ -79,7 +85,13 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
                 if ( q->front != NULL )
                 {
                     servicePoints[x].serving = q->front;
-                    servicePoints[x].timeTillFinished = avgServingTime;
+                    servingTime = chooseDistribution(avgServingTime,2,2, r, existsGSL); /* Normal/Gaussian Distribution: mean avgServingTime, standard deviation 2 */
+
+                    printf("%u\n", avgServingTime);
+                    printf("%u\n", servingTime);
+                    fflush(stdout);
+
+                    servicePoints[x].timeTillFinished = servingTime;
                     printf("\nFront of Queue: %d\n", q->front->customerId);
                     fflush(stdout);
                     printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
