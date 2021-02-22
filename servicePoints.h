@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <queue.h>
+#include <randomDistributions.h>
 
 /*----- structure definition -------------------------------------------------*/
 
@@ -20,7 +21,7 @@ typedef struct servicePoint SP;
 /*----- function prototypes --------------------------------------------------*/
 
 SP *createServicePoints(unsigned int);
-void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int, unsigned int*, unsigned int*);
+void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int, unsigned int*, unsigned int*, gsl_rng **, unsigned int*);
 int checkAllSPEmpty(SP*, unsigned int);
 
 #endif

@@ -8,7 +8,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     unsigned int n;
     gsl_rng            *r;
 
-    n = chooseDistribution(1,1,1, &r, &existsGSL); /* option 1: Uniform/Flat */
+    /* n = chooseDistribution(1,1,1, &r, &existsGSL); *//* option 1: Uniform/Flat */
     /* printf("%u\n", (unsigned int)n); */
     /* n = chooseDistribution(1,1,2, &r, &existsGSL); *//* option 2: Normal/Gaussian */
     /* printf("%u\n", (unsigned int)n); */
@@ -53,8 +53,9 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
             if ( (q->front) != NULL || notAllEmpty )
             {
                 /* assigned waiting customer to service points and remove fulfilled customers */
-                checkFinishedServing(servicePoints, q, (*numServicePoints), (*averageTimeTakenToServeCustomer), &fulfilled, &combinedWaitTime);
-                
+                checkFinishedServing(servicePoints, q, (*numServicePoints), (*averageTimeTakenToServeCustomer), 
+                                     &fulfilled, &combinedWaitTime, &r, &existsGSL);
+
                 /* remove all nodes that have zero patience remaining */
                 checkPatienceLimit(&q->front, &timedOut);
 

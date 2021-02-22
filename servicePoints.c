@@ -33,9 +33,11 @@ SP* createServicePoints(unsigned int numSP)
 
 
 /* function to remove customer that have finished being served and assigned new customers from queue */
-void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP, unsigned int servingTime, unsigned int *fulfilled, unsigned int *totalWaitTime)
+void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP, unsigned int avgServingTime, 
+                          unsigned int *fulfilled, unsigned int *combinedWaitTime,  gsl_rng **r, unsigned int *existsGSL)
 {   
     unsigned int x;
+    unsigned int servingTime;
     for ( x = 0; x < numSP; x++ )
     {
         printf("\nService Point: %d\n", servicePoints[x].servicePointId);
@@ -48,13 +50,19 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
             if ( q->front != NULL )
             {
                 servicePoints[x].serving = q->front;
+                servingTime = chooseDistribution(avgServingTime,5,2, r, existsGSL); /* Normal/Gaussian Distribution: mean avgServingTime, standard deviation 2 */
+             
+                printf("%u\n", avgServingTime);
+                printf("%u\n", servingTime);
+                fflush(stdout);
+
                 servicePoints[x].timeTillFinished = servingTime;
                 printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
                 fflush(stdout);
 
                 ++(*fulfilled); /* increment fulfilled customers when finished being served */
                 unsigned int customerWaitTime = (servicePoints[x].serving)->timeElapsed - (servicePoints[x].serving)->patience;
-                *totalWaitTime += customerWaitTime; /* collate time spent in queue for fulfilled customer */
+                *combinedWaitTime += customerWaitTime; /* collate time spent in queue for fulfilled customer */
                 deQueue(q);
                 continue; /* ensures waiting tolerance limit is not decremented for newly served customer */
             }
@@ -77,6 +85,12 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
                 if ( q->front != NULL )
                 {
                     servicePoints[x].serving = q->front;
+                    servingTime = chooseDistribution(avgServingTime,5,2, r, existsGSL); /* Normal/Gaussian Distribution: mean avgServingTime, standard deviation 2 */
+
+                    printf("%u\n", avgServingTime);
+                    printf("%u\n", servingTime);
+                    fflush(stdout);
+
                     servicePoints[x].timeTillFinished = servingTime;
                     printf("\nFront of Queue: %d\n", q->front->customerId);
                     fflush(stdout);
@@ -85,7 +99,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
 
                     ++(*fulfilled); /* increment fulfilled customers when finished being served */
                     unsigned int customerWaitTime = (servicePoints[x].serving)->timeElapsed - (servicePoints[x].serving)->patience;
-                    *totalWaitTime += customerWaitTime; /* collate time spent in queue for fulfilled customer */
+                    *combinedWaitTime += customerWaitTime; /* collate time spent in queue for fulfilled customer */
                     deQueue(q);
                 }
             }

@@ -3,6 +3,7 @@
 int chooseDistribution(unsigned int mean, unsigned int standardDeviation, unsigned int distribution, gsl_rng **r, unsigned int *existsGSL)
 {
     int n;
+    printf("%u\n",(*existsGSL));
     if ( !(*existsGSL) )
     {
         const gsl_rng_type *T;
