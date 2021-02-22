@@ -4,6 +4,19 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
                     unsigned int *closingTime, unsigned int *averageWaitingToleranceOfCustomer, 
                     unsigned int *averageTimeTakenToServeCustomer, unsigned int *averageNewCustomersPerInterval)
 {
+    unsigned int existsGSL = 0;
+    unsigned int n;
+    /* gsl_rng            *r; */
+
+    /* n = chooseDistribution(1,1,1, &r, &existsGSL); *//* option 1: Uniform/Flat */ 
+    /* printf("%u\n", (unsigned int)n); */
+    /* n = chooseDistribution(1,1,2, &r, &existsGSL); *//* option 2: Normal/Gaussian */
+    /* printf("%u\n", (unsigned int)n); */
+    /* n = chooseDistribution(1,1,3, &r, &existsGSL); *//* option 3: Poisson */
+    /* printf("%u\n", (unsigned int)n); */
+    /* n = chooseDistribution(1,1,4, &r, &existsGSL); *//* option 4: Gamma */
+    /* printf("%u\n\n", (unsigned int)n); */
+
     unsigned int s = 1;
     while ( s <= (*numSims) )
     {
@@ -74,4 +87,6 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
 
         s++;
     }
+
+    /* gsl_rng_free(r); *//* free the memory allocated to GSL random number generator */
 }

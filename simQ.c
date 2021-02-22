@@ -19,19 +19,6 @@ queue is full, leave the system as an unfulfilled customer.
 /* main function ------------------------------------ */
 int main(int argc, char **argv)
 {
-    unsigned int existsGSL = 0;
-    unsigned int n;
-    /* gsl_rng            *r; */
-
-    /* n = chooseDistribution(1,1,1, &r, &existsGSL); *//* option 1: Uniform/Flat */ 
-    /* printf("%u\n", (unsigned int)n); */
-    /* n = chooseDistribution(1,1,2, &r, &existsGSL); *//* option 2: Normal/Gaussian */
-    /* printf("%u\n", (unsigned int)n); */
-    /* n = chooseDistribution(1,1,3, &r, &existsGSL); *//* option 3: Poisson */
-    /* printf("%u\n", (unsigned int)n); */
-    /* n = chooseDistribution(1,1,4, &r, &existsGSL); *//* option 4: Gamma */
-    /* printf("%u\n\n", (unsigned int)n); */
-
     if ( argc != 4 )
     {
         fprintf(stderr, "Invalid number of arguments\n");
@@ -76,8 +63,6 @@ int main(int argc, char **argv)
 
     runSimulations(fileOut, &numSims, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
                   &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
-
-    /* gsl_rng_free(r); *//* free the memory allocated to GSL random number generator */
 
     return 0;
 }
