@@ -20,10 +20,9 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     int i;
     for ( i = 0; i < 5; i++ )
     {
-        n = chooseDistribution(10,2,2, &r, &existsGSL);
+        n = chooseDistribution(2,2,2, &r, &existsGSL);
         printf("%d\n",n);
         fflush(stdout);
-        /* gsl_rng_set(r,time(0)); */
     }
     exit(0);
     unsigned int s = 1;

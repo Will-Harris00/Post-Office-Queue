@@ -1,6 +1,6 @@
 #include <randomDistributions.h>
 
-int chooseDistribution(int mean, int standardDeviation, unsigned int distribution, gsl_rng **r, unsigned int *existsGSL)
+int chooseDistribution(unsigned int mean, unsigned int standardDeviation, unsigned int distribution, gsl_rng **r, unsigned int *existsGSL)
 {
     int n;
     if ( !(*existsGSL) )
@@ -25,8 +25,8 @@ int chooseDistribution(int mean, int standardDeviation, unsigned int distributio
     {
         printf("Normal/Gaussian Distribution: mean %d, standard deviation %d\n", mean, standardDeviation);
         n = gsl_ran_gaussian(*r,standardDeviation)+mean;
-        while ( n < 0 )
-            n = gsl_ran_gaussian(*r,standardDeviation)+mean;
+        if ( n < 0 )
+            n = 0;
     }
 
     if ( distribution == 3 )
@@ -42,5 +42,4 @@ int chooseDistribution(int mean, int standardDeviation, unsigned int distributio
     }
 
     return n;
-
 }
