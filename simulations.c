@@ -17,6 +17,13 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     /* n = chooseDistribution(1,1,4, &r, &existsGSL); *//* option 4: Gamma */
     /* printf("%u\n\n", (unsigned int)n); */
 
+    int i;
+    for ( i = 0; i < 5; i++ )
+    {
+        n = chooseDistribution(1,1,2, &r, &existsGSL);
+        printf("%u\n",n);
+        fflush(stdout);
+    }
     unsigned int s = 1;
     /* totals across all simulations */
     unsigned int totalTimedOut = 0;
@@ -54,7 +61,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
             {
                 /* assigned waiting customer to service points and remove fulfilled customers */
                 checkFinishedServing(servicePoints, q, (*numServicePoints), (*averageTimeTakenToServeCustomer), 
-                                     &fulfilled, &combinedWaitTime, &r, &existsGSL);
+                                     &fulfilled, &combinedWaitTime);
 
                 /* remove all nodes that have zero patience remaining */
                 checkPatienceLimit(&q->front, &timedOut);
