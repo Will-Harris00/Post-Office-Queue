@@ -23,10 +23,10 @@ struct queue {
 
 /*----- function prototypes --------------------------------------------------*/
 
-CN*    newNode  (unsigned int, unsigned int);
+CN*    newNode  (unsigned int*, unsigned int);
 
 struct queue*   createQueue();
-void   enQueue  (struct queue*, int);
+void   enQueue  (struct queue*, int, unsigned int*);
 void   deQueue  (struct queue*);
 int    getCount (struct customerNode*);
 

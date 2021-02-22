@@ -3,7 +3,7 @@
 /* functions to manage the queue */
 
 /* utility function to create a new linked list node. */
-struct customerNode* newNode(unsigned int custId, unsigned int patience)
+struct customerNode* newNode(unsigned int *custId, unsigned int patience)
 {   
     struct customerNode* temp;
     if ( !( temp = (CN *)malloc(sizeof(CN)) ) ) /* check memory assignment */
@@ -12,7 +12,7 @@ struct customerNode* newNode(unsigned int custId, unsigned int patience)
         exit(-1);
     }
 
-    temp->customerId = custId;
+    temp->customerId = *custId;
     temp->patience = patience;
     temp->timeElapsed = patience;
     temp->next = NULL;
@@ -33,12 +33,11 @@ struct queue* createQueue()
 }
 
 /* function to add a customerNode to the queue */
-void enQueue(struct queue* q, int patience)
-{   
-    static unsigned int custId = 1;
+void enQueue(struct queue* q, int patience, unsigned int *custId)
+{
     /* Create a new LL node */
     struct customerNode* temp = newNode(custId, patience); 
-    custId++;
+    ++(*custId);
 
     /* If queue is empty, then new node is front and rear both */
     if ( q->rear == NULL )
