@@ -1,7 +1,8 @@
 gcc -ansi -c simQ.c -I./ -o simQ.o
 gcc -ansi -c queue.c -I./ -o queue.o
+gcc -ansi -c servicePoints.c -I./ -o servicePoints.o
 gcc -ansi -c readInputFile.c -I./ -o readInputFile.o
 gcc -ansi -c writeOutputToFile.c -I./ -o writeOutputToFile.o 
 gcc -ansi -c randomDistributions.c -I./ -o randomDistributions.o 
-gcc randomDistributions.o writeOutputToFile.o readInputFile.o queue.o simQ.o -o simQ -lgsl -lgslcblas
+gcc randomDistributions.o writeOutputToFile.o readInputFile.o servicePoints.o queue.o simQ.o -o simQ -lgsl -lgslcblas
 ./simQ testInput.txt 2 testOutput.txt

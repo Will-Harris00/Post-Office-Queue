@@ -9,6 +9,7 @@
 #include <gsl/gsl_rng.h> /* gsl library */
 #include <gsl/gsl_randist.h> /* more gsl library */
 #include <queue.h>
+#include <servicePoints.h>
 #include <readInputFile.h>
 #include <randomDistributions.h>
 
