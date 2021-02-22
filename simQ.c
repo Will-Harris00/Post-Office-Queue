@@ -32,13 +32,12 @@ typedef struct servicePoint SP;
 SP *createServicePoints(unsigned int);
 
 void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int, unsigned int*, unsigned int*);
-void checkPatienceLimit(struct customerNode**, unsigned int*);
 int checkAllSPEmpty(SP*, unsigned int);
 
 
 /* main function ------------------------------------ */
 int main(int argc, char **argv)
-{   
+{
     unsigned int s = 1;
     unsigned int existsGSL = 0;
     unsigned int n;
@@ -95,10 +94,10 @@ int main(int argc, char **argv)
     printf("averageWaitingToleranceOfCustomer: %u\n\n", averageWaitingToleranceOfCustomer);
 
     while ( s <= numSims)
-    {   
+    {
         printf("\n\n\nSimulation number: %u\n", s);
         fflush(stdout);
-        unsigned int custId = 0;
+        unsigned int custId = 1;
         /* simulation statistics */
         unsigned int timedOut = 0;
         unsigned int unfulfilled = 0; /* count unfulfilled customers*/
@@ -171,7 +170,7 @@ int main(int argc, char **argv)
 
 /* function to check all service points are empty */
 int checkAllSPEmpty(SP* servicePoints, unsigned int numServicePoints)
-{   
+{
     unsigned int allEmpty = 1;
     unsigned int x;
     for ( x = 0; x < numServicePoints; x++ )
@@ -218,7 +217,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
 {   
     unsigned int x;
     for ( x = 0; x < numSP; x++ )
-    {   
+    {
         printf("\nService Point: %d\n", servicePoints[x].servicePointId);
         fflush(stdout);
         if ( (servicePoints[x].serving) == NULL )
@@ -249,7 +248,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
             fflush(stdout);
 
             if ( (servicePoints[x].timeTillFinished) == 0 )
-            {   
+            {
                 CN* tmp; /* declare a temporary pointer to an empty customer struct */
                 tmp = servicePoints[x].serving; /* assign temp so we do not loose track of finished customer */
                 servicePoints[x].serving = NULL; /* remove finished customer from service point */
@@ -271,50 +270,5 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
                 }
             }
         }
-    }
-}
-
-
-void checkPatienceLimit(struct customerNode** head_ref, unsigned int *timedOut)
-{   
-    /* Store rear (head) node */
-    struct customerNode *temp = *head_ref, *prev;
- 
-    /* If the rear (head) node itself has zero patience remaining */
-    while ( temp != NULL && temp->patience == 0 )
-    {
-        printf("Removed customer: %d\n", temp->customerId);
-        fflush(stdout);
-        ++(*timedOut);
-
-        *head_ref = temp->next; /* Changed head */
-        free(temp); /* free old head */
-        temp = *head_ref;
-    }
-
-    /* Delete occurrences other than head */
-    while ( temp != NULL ) 
-    {   
-        /* Search for nodes to be deleted, keep track of the
-        previous node as we need to change 'prev->next' */
-        while ( temp != NULL && temp->patience != 0 )
-        {   
-            --(temp->patience); /* decrement waiting tolerance limit */
-            prev = temp;
-            temp = temp->next;
-        }
-    
-        /* If no node with zero patience is present in linked list queue */
-        if ( temp == NULL )
-            return;
-    
-        /* Unlink the node from linked list */
-        printf("Removed customer: %d\n", temp->customerId);
-        fflush(stdout);
-        prev->next = temp->next;
-        free(temp); /* Free memory */
-
-        /* Update temp for next iteration of outer loop */
-        temp = prev->next;
     }
 }

@@ -30,4 +30,6 @@ void   enQueue  (struct queue*, int, unsigned int*);
 void   deQueue  (struct queue*);
 int    getCount (struct customerNode*);
 
+void checkPatienceLimit(struct customerNode**, unsigned int*);
+
 #endif

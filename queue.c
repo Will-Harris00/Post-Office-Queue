@@ -70,7 +70,6 @@ void deQueue(struct queue* q)
     free(temp);
 }
 
-
 /* function to count number of nodes in the queue */
 int getCount(struct customerNode* head)
 { 
@@ -80,4 +79,49 @@ int getCount(struct customerNode* head)
   
     /* count is 1 + count of remaining list */
     return 1 + getCount(head->next);
+}
+
+/* function to remove customers from queue that have reached waiting tolerance limit */
+void checkPatienceLimit(struct customerNode** head_ref, unsigned int *timedOut)
+{   
+    /* Store rear (head) node */
+    struct customerNode *temp = *head_ref, *prev;
+ 
+    /* If the rear (head) node itself has zero patience remaining */
+    while ( temp != NULL && temp->patience == 0 )
+    {
+        printf("Removed customer: %d\n", temp->customerId);
+        fflush(stdout);
+        ++(*timedOut);
+
+        *head_ref = temp->next; /* Changed head */
+        free(temp); /* free old head */
+        temp = *head_ref;
+    }
+
+    /* Delete occurrences other than head */
+    while ( temp != NULL ) 
+    {
+        /* Search for nodes to be deleted, keep track of the
+        previous node as we need to change 'prev->next' */
+        while ( temp != NULL && temp->patience != 0 )
+        {
+            --(temp->patience); /* decrement waiting tolerance limit */
+            prev = temp;
+            temp = temp->next;
+        }
+    
+        /* If no node with zero patience is present in linked list queue */
+        if ( temp == NULL )
+            return;
+    
+        /* Unlink the node from linked list */
+        printf("Removed customer: %d\n", temp->customerId);
+        fflush(stdout);
+        prev->next = temp->next;
+        free(temp); /* Free memory */
+
+        /* Update temp for next iteration of outer loop */
+        temp = prev->next;
+    }
 }
