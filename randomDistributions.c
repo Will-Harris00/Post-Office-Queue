@@ -1,6 +1,6 @@
 #include <randomDistributions.h>
 
-int chooseDistribution(unsigned int mean, unsigned int standardDeviation, unsigned int distribution, gsl_rng **r, unsigned int *existsGSL)
+int chooseDistribution(int mean, int standardDeviation, unsigned int distribution, gsl_rng **r, unsigned int *existsGSL)
 {
     int n;
     if ( !(*existsGSL) )
@@ -10,11 +10,10 @@ int chooseDistribution(unsigned int mean, unsigned int standardDeviation, unsign
         gsl_rng_env_setup();
         T = gsl_rng_default;
         *r = gsl_rng_alloc(T);
+        /* seed it based on the current time */
+        gsl_rng_set(*r,time(0));
         (*existsGSL) = 1; /* ensures we only create the random number generator once */
     }
-
-    /* seed it based on the current time */
-    gsl_rng_set(*r,time(0));
 
     if ( distribution == 1 )
     {
