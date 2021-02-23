@@ -125,8 +125,14 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         free(servicePoints);
         free(q);
 
+        unsigned int timeAfterClose;
+        timeAfterClose = timeUnits-(*closingTime);
+
+        if ( (*numSims) == 1 )
+            unsignedTypeCasting(fileOut, "Time after close all customers leave:", &timeAfterClose);
+
         /* calculate seconds from closing time till finished serving all customers in queue */
-        printf("Time after closing finished serving: %u\n", (timeUnits-(*closingTime)));
+        printf("Time after closing finished serving: %u\n", timeAfterClose);
         printf("Timed-out customers: %u\n", timedOut);
         printf("Unfulfilled customers: %u\n", unfulfilled);
         printf("Fulfilled customers: %u\n", fulfilled); /* fulfilled customer are counted at the time they start being served */
