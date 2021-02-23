@@ -6,6 +6,7 @@
 
 /*----- function prototypes --------------------------------------------------*/
 
-int writeOutputToFile(char*, char*, int);
+int writeOutputToFile(char*, char*, char*);
+void writeParametersToFile(char*, int*, int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*);
 
 #endif

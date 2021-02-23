@@ -64,5 +64,8 @@ int main(int argc, char **argv)
     runSimulations(fileOut, &numSims, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
                   &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
 
+    writeParametersToFile(fileOut, &numSims, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
+                  &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
+
     return 0;
 }

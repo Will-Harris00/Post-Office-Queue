@@ -11,7 +11,6 @@
 
 /*----- function prototypes --------------------------------------------------*/
 
-int writeOutputToFile(char*, char*, int);
 void runSimulations(char*, int*, int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*);
 
 #endif
