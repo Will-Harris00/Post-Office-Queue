@@ -28,7 +28,9 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     exit(0); *//* test random number generation with GSL */
     
 
-    unsigned int s = 1;
+    unsigned int s = 1; /* number of simulations*/
+    unsigned int tolerance; /* random customer waiting tolerance limit */
+
     /* totals across all simulations */
     unsigned int totalTimedOut = 0;
     unsigned int totalFulfilled = 0;
@@ -78,10 +80,14 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
             if ( timeUnits < (*closingTime) )
             {
                 unsigned int j;
+
                 for ( j = 0; j < (*averageNewCustomersPerInterval); j++ )
                 {
                     if ( count < (*maxQueueLength) || (*maxQueueLength) == -1 )
-                        enQueue(q, (*averageWaitingToleranceOfCustomer), &custId);
+                    {
+                        tolerance = chooseDistribution((*averageWaitingToleranceOfCustomer),3,3, &r, &existsGSL); /* Poisson Distribution: mean avgServingTime, standard deviation 3 */
+                        enQueue(q, tolerance, &custId);
+                    }
                     else
                         ++(unfulfilled); /* increment unfulfilled customers when they attempt to join a full queue */
                     count = getCount(q->front); /* we initialised count to zero so no need to get count on first iteration */

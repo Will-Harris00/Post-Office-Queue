@@ -50,7 +50,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
             if ( q->front != NULL )
             {
                 servicePoints[x].serving = q->front;
-                servingTime = chooseDistribution(avgServingTime,2,3, r, existsGSL); /* Poisson Distribution: mean avgServingTime, standard deviation 2 */
+                servingTime = chooseDistribution(avgServingTime,3,3, r, existsGSL); /* Poisson Distribution: mean avgServingTime, standard deviation 3 */
                 servicePoints[x].timeTillFinished = servingTime;
 
                 printf("Started Serving Customer: %u\n\n", (servicePoints[x].serving)->customerId);
@@ -81,7 +81,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
                 if ( q->front != NULL )
                 {
                     servicePoints[x].serving = q->front;
-                    servingTime = chooseDistribution(avgServingTime,2,3, r, existsGSL); /* Poisson Distribution: mean avgServingTime, standard deviation 2 */
+                    servingTime = chooseDistribution(avgServingTime,3,3, r, existsGSL); /* Poisson Distribution: mean avgServingTime, standard deviation 3 */
                     servicePoints[x].timeTillFinished = servingTime;
 
                     printf("\nFront of Queue: %u\n", q->front->customerId);

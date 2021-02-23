@@ -17,15 +17,15 @@ unsigned int chooseDistribution(unsigned int mean, unsigned int standardDeviatio
 
     if ( distribution == 1 )
     {
-        printf("Uniform distributed between 0 and %u\n", mean);
-        fflush(stdout);
+        /* printf("Uniform distributed between 0 and %u\n", mean);
+        fflush(stdout); */
         n = gsl_ran_flat(*r,0,mean);
     }
 
     if ( distribution == 2 )
     {
-        printf("Normal/Gaussian Distribution: mean %u, standard deviation %u\n", mean, standardDeviation);
-        fflush(stdout);
+        /* printf("Normal/Gaussian Distribution: mean %u, standard deviation %u\n", mean, standardDeviation);
+        fflush(stdout); */
         n = gsl_ran_gaussian(*r,standardDeviation)+mean;
         if ( n < 0 )
             n = 0;
@@ -33,15 +33,15 @@ unsigned int chooseDistribution(unsigned int mean, unsigned int standardDeviatio
 
     if ( distribution == 3 )
     {
-        printf("Poisson Distribution: mean %u, standard deviation %u\n", mean, standardDeviation);
-        fflush(stdout);
+        /* printf("Poisson Distribution: mean %u, standard deviation %u\n", mean, standardDeviation);
+        fflush(stdout); */
         n = gsl_ran_poisson(*r,standardDeviation)+mean;
     }
 
     if ( distribution == 4 )
     {
-        printf("Gamma Distribution: between 0 and ∞\n");
-        fflush(stdout);
+        /* printf("Gamma Distribution: between 0 and ∞\n");
+        fflush(stdout); */
         n = gsl_ran_gamma(*r,1,mean);
     }
 
