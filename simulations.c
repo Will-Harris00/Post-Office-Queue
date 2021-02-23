@@ -112,6 +112,8 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
                 unsignedTypeCasting(fileOut, "Current Number of timed-out customers:", &timedOut);
                 unsignedTypeCasting(fileOut, "Current Number of unfulfilled customers:", &unfulfilled);
                 unsignedTypeCasting(fileOut, "Current Number of fulfilled customers:", &fulfilled);
+                if ( timeUnits == (*closingTime) ) /* add marker to the file showing closing time */
+                    unsignedTypeCasting(fileOut, "\n\nClosing time reached:", closingTime);
             }
 
             timeUnits++;
