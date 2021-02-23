@@ -59,6 +59,8 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         unsigned int count = 0;
         while ( timeUnits < (*closingTime) || (q->front) != NULL || numSPInUse > 0 )
         {
+            if ( (*numSims) == 1 )
+                unsignedTypeCasting(fileOut, "\nTime units:", &timeUnits);
             printf("Time units: %u\n", timeUnits);
             fflush(stdout);
             count = getCount(q->front);
