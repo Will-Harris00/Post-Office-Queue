@@ -148,7 +148,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     float avgWaitFulfilled;
     avgWaitFulfilled = (float)totalWaitTime / (float)totalFulfilled;
     printf("Average wait time for fulfilled customers: %f\n", avgWaitFulfilled);
-    /* unsignedTypeCasting(fileOut, "Average wait for fulfilled customers:", &avgWaitFulfilled); */
+    floatTypeCasting(fileOut, "Average wait for fulfilled customers:", &avgWaitFulfilled);
 
     gsl_rng_free(r); /* free the memory allocated to GSL random number generator */
 

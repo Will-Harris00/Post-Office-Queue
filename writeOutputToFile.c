@@ -36,6 +36,14 @@ void signedTypeCasting(char* fileOut, char *description, int *data)
 }
 
 
+void floatTypeCasting(char* fileOut, char *description, float *data)
+{
+    char strData[20];
+    snprintf(strData, 10, "%f", (*data));
+    writeOutputToFile(fileOut, description, strData);
+}
+
+
 /* function to write input paramaters to output input file */
 void writeParametersToFile(char *fileOut, int *numSims, int *maxQueueLength, unsigned int *numServicePoints,
                            unsigned int *closingTime, unsigned int *averageWaitingToleranceOfCustomer, 

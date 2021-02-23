@@ -9,6 +9,7 @@
 int writeOutputToFile(char*, char*, char *);
 void unsignedTypeCasting(char*, char*, unsigned int*);
 void signedTypeCasting(char*, char*, int*);
+void floatTypeCasting(char*, char*, float*);
 int stopOverwrite(char*);
 void writeParametersToFile(char*, int*, int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*);
 
