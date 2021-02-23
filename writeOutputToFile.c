@@ -45,3 +45,17 @@ void writeParametersToFile(char *fileOut, int *numSims, int *maxQueueLength, uns
     snprintf(strData, 10, "%d", (*averageNewCustomersPerInterval));
     writeOutputToFile(fileOut, "\nAverage new customers per interval:", strData);
 }
+
+
+/* function to check if the output file already exists */
+int stopOverwrite(char *fileOut)
+{
+    FILE *fp;
+
+    if ( (fp = fopen(fileOut, "r")) != NULL )
+    {
+        fprintf(stderr, "Output file already exists - please choose another name\n");
+        fclose(fp);
+        return -1;
+    }
+}

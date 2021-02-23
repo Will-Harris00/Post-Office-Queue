@@ -61,10 +61,13 @@ int main(int argc, char **argv)
     printf("averageTimeTakenToServeCustomer: %u\n", averageTimeTakenToServeCustomer);
     printf("averageWaitingToleranceOfCustomer: %u\n\n", averageWaitingToleranceOfCustomer);
 
-    runSimulations(fileOut, &numSims, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
-                  &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
+    if ( stopOverwrite(fileOut) ) /* stops existing files being overwritten */
+        exit(-6);
 
     writeParametersToFile(fileOut, &numSims, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
+                  &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
+
+    runSimulations(fileOut, &numSims, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
                   &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
 
     return 0;

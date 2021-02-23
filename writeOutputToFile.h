@@ -7,6 +7,7 @@
 /*----- function prototypes --------------------------------------------------*/
 
 int writeOutputToFile(char*, char*, char*);
+int stopOverwrite(char *fileOut);
 void writeParametersToFile(char*, int*, int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*);
 
 #endif
