@@ -34,7 +34,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
 
     /* totals across all simulations */
     unsigned int totalTimedOut = 0;
-    unsigned int totalFulfilled = 0;
+    unsigned int totalFulfilled = 0; /* fulfilled customer are counted at the time they start being served */
     unsigned int totalUnfulfilled = 0;
     unsigned int totalWaitTime = 0;
 
@@ -59,13 +59,13 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         unsigned int count = 0;
         while ( timeUnits < (*closingTime) || (q->front) != NULL || numSPInUse > 0 )
         {
-            if ( (*numSims) == 1 )
-                unsignedTypeCasting(fileOut, "\nTime units:", &timeUnits);
             printf("Time units: %u\n", timeUnits);
             fflush(stdout);
             count = getCount(q->front);
             printf("Count: %u\n\n", count);
             fflush(stdout);
+            if ( (*numSims) == 1 ) /* write current time unit to output file */
+                unsignedTypeCasting(fileOut, "\nTime units:", &timeUnits);
 
             if ( (q->front) != NULL || numSPInUse > 0 )
             {
@@ -78,6 +78,13 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
 
                 /* check if customers are still being served */
                 numSPInUse = countSPInUse(servicePoints, (*numServicePoints));
+            }
+
+            if ( (*numSims) == 1 )
+            {
+                /* write current number of customer being served and number in queue to output file */
+                unsignedTypeCasting(fileOut, "Number of customers being served:", &numSPInUse);
+                unsignedTypeCasting(fileOut, "Number of customers in queue:", &count);
             }
 
             if ( timeUnits < (*closingTime) )
@@ -99,6 +106,14 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
                 }
             }
 
+            if ( (*numSims) == 1 )
+            {
+                /* write current number of timed-out, fulfilled and unfulfilled */
+                unsignedTypeCasting(fileOut, "Current Number of timed-out customers:", &timedOut);
+                unsignedTypeCasting(fileOut, "Current Number of unfulfilled customers:", &unfulfilled);
+                unsignedTypeCasting(fileOut, "Current Number of fulfilled customers:", &fulfilled);
+            }
+
             timeUnits++;
         }
 
@@ -112,22 +127,25 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         printf("Time after closing finished serving: %u\n", (timeUnits-(*closingTime)));
         printf("Timed-out customers: %u\n", timedOut);
         printf("Unfulfilled customers: %u\n", unfulfilled);
-        printf("Fulfilled customers: %u\n", fulfilled);
+        printf("Fulfilled customers: %u\n", fulfilled); /* fulfilled customer are counted at the time they start being served */
         printf("Combined time spent waiting by fufilled customers: %u\n", combinedWaitTime);
         fflush(stdout);
 
         totalTimedOut += timedOut;
         totalUnfulfilled += unfulfilled;
-        totalFulfilled += fulfilled;
+        totalFulfilled += fulfilled; /* fulfilled customer are counted at the time they start being served */
         totalWaitTime += combinedWaitTime;
         s++;
     }
 
     gsl_rng_free(r); /* free the memory allocated to GSL random number generator */
 
+    if ( (*numSims) != 1 )
+    {
     printf("Total timed-out customers: %u\n", totalTimedOut);
     printf("Total unfulfilled customers: %u\n", totalUnfulfilled);
-    printf("Total fulfilled customers: %u\n", totalFulfilled);
+    printf("Total fulfilled customers: %u\n", totalFulfilled); /* fulfilled customer are counted at the time they start being served */
     printf("Total combined time spent waiting by fufilled customers: %u\n", totalWaitTime);
     fflush(stdout);
+    }
 }
