@@ -55,9 +55,9 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         SP* servicePoints = createServicePoints((*numServicePoints));
         
         unsigned int timeUnits = 0;
-        unsigned int notAllEmpty = 0;
+        unsigned int numSPInUse = 0;
         unsigned int count = 0;
-        while ( timeUnits < (*closingTime) || (q->front) != NULL || notAllEmpty)
+        while ( timeUnits < (*closingTime) || (q->front) != NULL || numSPInUse > 0 )
         {
             printf("Time units: %u\n", timeUnits);
             fflush(stdout);
@@ -65,7 +65,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
             printf("Count: %u\n\n", count);
             fflush(stdout);
 
-            if ( (q->front) != NULL || notAllEmpty )
+            if ( (q->front) != NULL || numSPInUse > 0 )
             {
                 /* assigned waiting customer to service points and remove fulfilled customers */
                 checkFinishedServing(servicePoints, q, (*numServicePoints), (*averageTimeTakenToServeCustomer), 
@@ -75,7 +75,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
                 checkPatienceLimit(&q->front, &timedOut);
 
                 /* check if customers are still being served */
-                notAllEmpty = !( checkAllSPEmpty(servicePoints, (*numServicePoints)) );
+                numSPInUse = countSPInUse(servicePoints, (*numServicePoints));
             }
 
             if ( timeUnits < (*closingTime) )

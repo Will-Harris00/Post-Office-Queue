@@ -22,6 +22,6 @@ typedef struct servicePoint SP;
 
 SP *createServicePoints(unsigned int);
 void checkFinishedServing(SP*, struct queue*, unsigned int, unsigned int, unsigned int*, unsigned int*, gsl_rng **, unsigned int*);
-int checkAllSPEmpty(SP*, unsigned int);
+int countSPInUse(SP*, unsigned int);
 
 #endif

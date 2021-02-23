@@ -100,17 +100,17 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
 }
 
 
-/* function to check all service points are empty */
-int checkAllSPEmpty(SP* servicePoints, unsigned int numServicePoints)
+/* function to count how many service points are serving customers */
+int countSPInUse(SP* servicePoints, unsigned int numServicePoints)
 {
-    unsigned int allEmpty = 1;
+    unsigned int numSPInUse = 0;
     unsigned int x;
     for ( x = 0; x < numServicePoints; x++ )
     {
         if ( (servicePoints[x].serving) != NULL )
         {
-            allEmpty = 0;
+            numSPInUse++;
         }
     }
-    return allEmpty;
+    return numSPInUse;
 }
