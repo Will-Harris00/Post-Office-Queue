@@ -25,7 +25,7 @@ SP* createServicePoints(unsigned int numSP)
 
     for ( x = 0; x < numSP; x++ )
     {
-        printf("SP identifier: %i\n",servicePoints[x].servicePointId);
+        printf("SP identifier: %u\n",servicePoints[x].servicePointId);
         fflush(stdout);
     }
     return servicePoints;
@@ -40,24 +40,20 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
     unsigned int servingTime;
     for ( x = 0; x < numSP; x++ )
     {
-        printf("\nService Point: %d\n", servicePoints[x].servicePointId);
+        printf("\nService Point: %u\n", servicePoints[x].servicePointId);
         fflush(stdout);
         if ( (servicePoints[x].serving) == NULL )
         {
-            printf("Empty Service Point: %d\n", servicePoints[x].servicePointId);
+            printf("Empty Service Point: %u\n", servicePoints[x].servicePointId);
             fflush(stdout);
 
             if ( q->front != NULL )
             {
                 servicePoints[x].serving = q->front;
-                servingTime = chooseDistribution(avgServingTime,2,2, r, existsGSL); /* Normal/Gaussian Distribution: mean avgServingTime, standard deviation 2 */
-
-                printf("%u\n", avgServingTime);
-                printf("%u\n", servingTime);
-                fflush(stdout);
-
+                servingTime = chooseDistribution(avgServingTime,2,3, r, existsGSL); /* Poisson Distribution: mean avgServingTime, standard deviation 2 */
                 servicePoints[x].timeTillFinished = servingTime;
-                printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
+
+                printf("Started Serving Customer: %u\n\n", (servicePoints[x].serving)->customerId);
                 fflush(stdout);
 
                 ++(*fulfilled); /* increment fulfilled customers when finished being served */
@@ -72,7 +68,7 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
         if ( (servicePoints[x].serving) != NULL )
         {
             --(servicePoints[x].timeTillFinished); /* Decrement time till finished serving counter */
-            printf("Time Remaining: %d\n", servicePoints[x].timeTillFinished);
+            printf("Time Remaining: %u\n", servicePoints[x].timeTillFinished);
             fflush(stdout);
 
             if ( (servicePoints[x].timeTillFinished) == 0 )
@@ -85,16 +81,12 @@ void checkFinishedServing(SP* servicePoints, struct queue* q, unsigned int numSP
                 if ( q->front != NULL )
                 {
                     servicePoints[x].serving = q->front;
-                    servingTime = chooseDistribution(avgServingTime,2,2, r, existsGSL); /* Normal/Gaussian Distribution: mean avgServingTime, standard deviation 2 */
-
-                    printf("%u\n", avgServingTime);
-                    printf("%u\n", servingTime);
-                    fflush(stdout);
-
+                    servingTime = chooseDistribution(avgServingTime,2,3, r, existsGSL); /* Poisson Distribution: mean avgServingTime, standard deviation 2 */
                     servicePoints[x].timeTillFinished = servingTime;
-                    printf("\nFront of Queue: %d\n", q->front->customerId);
+
+                    printf("\nFront of Queue: %u\n", q->front->customerId);
                     fflush(stdout);
-                    printf("Started Serving Customer: %d\n\n", (servicePoints[x].serving)->customerId);
+                    printf("Started Serving Customer: %u\n\n", (servicePoints[x].serving)->customerId);
                     fflush(stdout);
 
                     ++(*fulfilled); /* increment fulfilled customers when finished being served */

@@ -33,7 +33,7 @@ struct queue* createQueue()
 }
 
 /* function to add a customerNode to the queue */
-void enQueue(struct queue* q, int patience, unsigned int *custId)
+void enQueue(struct queue* q, unsigned int patience, unsigned int *custId)
 {
     /* Create a new LL node */
     struct customerNode* temp = newNode(custId, patience); 
@@ -90,7 +90,7 @@ void checkPatienceLimit(struct customerNode** head_ref, unsigned int *timedOut)
     /* If the rear (head) node itself has zero patience remaining */
     while ( temp != NULL && temp->patience == 0 )
     {
-        printf("Removed customer: %d\n", temp->customerId);
+        printf("Removed customer: %u\n", temp->customerId);
         fflush(stdout);
         ++(*timedOut);
 
@@ -116,7 +116,7 @@ void checkPatienceLimit(struct customerNode** head_ref, unsigned int *timedOut)
             return;
     
         /* Unlink the node from linked list */
-        printf("Removed customer: %d\n", temp->customerId);
+        printf("Removed customer: %u\n", temp->customerId);
         fflush(stdout);
         prev->next = temp->next;
         free(temp); /* Free memory */

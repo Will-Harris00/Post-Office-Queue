@@ -5,9 +5,9 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
                     unsigned int *averageTimeTakenToServeCustomer, unsigned int *averageNewCustomersPerInterval)
 {
     unsigned int existsGSL = 0;
-    /* int n; */
     gsl_rng            *r;
 
+    /* int n; */
     /* n = chooseDistribution(1,1,1, &r, &existsGSL); *//* option 1: Uniform/Flat */
     /* printf("%u\n", (unsigned int)n); */
     /* n = chooseDistribution(1,1,2, &r, &existsGSL); *//* option 2: Normal/Gaussian */
@@ -21,12 +21,12 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     int i;
     for ( i = 0; i < 5; i++ )
     {
-        n = chooseDistribution(2,2,2, &r, &existsGSL);
+        n = chooseDistribution(2,2,3, &r, &existsGSL);
         printf("%d\n",n);
         fflush(stdout);
     }
-    exit(0);
-    */
+    exit(0); *//* test random number generation with GSL */
+    
 
     unsigned int s = 1;
     /* totals across all simulations */
@@ -57,6 +57,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         while ( timeUnits < (*closingTime) || (q->front) != NULL || notAllEmpty)
         {
             printf("Time units: %u\n", timeUnits);
+            fflush(stdout);
             count = getCount(q->front);
             printf("Count: %u\n\n", count);
             fflush(stdout);

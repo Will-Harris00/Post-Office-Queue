@@ -26,7 +26,7 @@ struct queue {
 CN*    newNode  (unsigned int*, unsigned int);
 
 struct queue*   createQueue();
-void   enQueue  (struct queue*, int, unsigned int*);
+void   enQueue  (struct queue*, unsigned int, unsigned int*);
 void   deQueue  (struct queue*);
 int    getCount (struct customerNode*);
 
