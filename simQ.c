@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 
     if ( readInputFile(fileIn, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
                   &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval) )
-                  exit(-3);
+                  exit(-3); /* exits on fail to read input file */
 
     printf("maxQueueLength: %d\n", maxQueueLength);
     printf("numServicePoints: %u\n", numServicePoints);
@@ -65,10 +65,10 @@ int main(int argc, char **argv)
         exit(-6);
 
     writeParametersToFile(fileOut, &numSims, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
-                  &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
+                          &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
 
     runSimulations(fileOut, &numSims, &maxQueueLength, &numServicePoints, &closingTime, &averageWaitingToleranceOfCustomer, 
-                  &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
+                   &averageTimeTakenToServeCustomer, &averageNewCustomersPerInterval);
 
     return 0;
 }

@@ -6,8 +6,10 @@
 
 /*----- function prototypes --------------------------------------------------*/
 
-int writeOutputToFile(char*, char*, char*);
-int stopOverwrite(char *fileOut);
+int writeOutputToFile(char*, char*, char *);
+void unsignedTypeCasting(char*, char*, unsigned int*);
+void signedTypeCasting(char*, char*, int*);
+int stopOverwrite(char*);
 void writeParametersToFile(char*, int*, int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*);
 
 #endif
