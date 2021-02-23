@@ -145,15 +145,19 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         totalWaitTime += combinedWaitTime;
         s++;
     }
+    float avgWaitFulfilled;
+    avgWaitFulfilled = (float)totalWaitTime / (float)totalFulfilled;
+    printf("Average wait time for fulfilled customers: %f\n", avgWaitFulfilled);
+    /* unsignedTypeCasting(fileOut, "Average wait for fulfilled customers:", &avgWaitFulfilled); */
 
     gsl_rng_free(r); /* free the memory allocated to GSL random number generator */
 
     if ( (*numSims) != 1 )
     {
-    printf("Total timed-out customers: %u\n", totalTimedOut);
-    printf("Total unfulfilled customers: %u\n", totalUnfulfilled);
-    printf("Total fulfilled customers: %u\n", totalFulfilled); /* fulfilled customer are counted at the time they start being served */
-    printf("Total combined time spent waiting by fufilled customers: %u\n", totalWaitTime);
-    fflush(stdout);
+        printf("Total timed-out customers: %u\n", totalTimedOut);
+        printf("Total unfulfilled customers: %u\n", totalUnfulfilled);
+        printf("Total fulfilled customers: %u\n", totalFulfilled); /* fulfilled customer are counted at the time they start being served */
+        printf("Total combined time spent waiting by fufilled customers: %u\n", totalWaitTime);
+        fflush(stdout);
     }
 }
