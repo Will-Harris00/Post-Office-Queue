@@ -33,10 +33,11 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     unsigned int newCustomers; /* random number of new customers */
 
     /* totals across all simulations */
-    unsigned int totalTimedOut = 0;
     unsigned int totalFulfilled = 0; /* fulfilled customer are counted at the time they start being served */
     unsigned int totalUnfulfilled = 0;
+    unsigned int totalTimedOut = 0;
     unsigned int totalWaitTime = 0;
+    unsigned int totalTimeAfterClose = 0;
 
     while ( s <= (*numSims) )
     {
@@ -44,10 +45,10 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         fflush(stdout);
         unsigned int custId = 1;
         /* simulation statistics */
-        unsigned int timedOut = 0;
-        unsigned int unfulfilled = 0; /* count unfulfilled customers*/
         unsigned int fulfilled = 0; /* count fulfilled customers */
-        unsigned int combinedWaitTime = 0; /* count collective wait time elapsed of fulfilled customers */
+        unsigned int unfulfilled = 0; /* count unfulfilled customers*/
+        unsigned int timedOut = 0; /* count timed-out customers */
+        unsigned int combinedWaitTime = 0; /* count collective time spend waiting by fulfilled customers */
 
         /* initialise an empty list to use as our queue */
         struct queue* q = createQueue();
@@ -69,7 +70,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
 
             if ( (q->front) != NULL || numSPInUse > 0 )
             {
-                /* assigned waiting customer to service points and remove fulfilled customers */
+                /* assign waiting customer to service points and remove fulfilled customers */
                 checkFinishedServing(servicePoints, q, (*numServicePoints), (*averageTimeTakenToServeCustomer), 
                                      &fulfilled, &combinedWaitTime, &r, &existsGSL);
 
@@ -108,10 +109,10 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
 
             if ( (*numSims) == 1 )
             {
-                /* write current number of timed-out, fulfilled and unfulfilled */
-                unsignedTypeCasting(fileOut, "Current Number of timed-out customers:", &timedOut);
-                unsignedTypeCasting(fileOut, "Current Number of unfulfilled customers:", &unfulfilled);
+                /* write current number of fulfilled, unfulfilled and timed-out customers */
                 unsignedTypeCasting(fileOut, "Current Number of fulfilled customers:", &fulfilled);
+                unsignedTypeCasting(fileOut, "Current Number of unfulfilled customers:", &unfulfilled);
+                unsignedTypeCasting(fileOut, "Current Number of timed-out customers:", &timedOut);
                 if ( timeUnits == (*closingTime) ) /* add marker to the file showing closing time */
                     unsignedTypeCasting(fileOut, "\n\nClosing time reached:", closingTime);
             }
@@ -132,32 +133,56 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
             unsignedTypeCasting(fileOut, "Time after close all customers leave:", &timeAfterClose);
 
         /* calculate seconds from closing time till finished serving all customers in queue */
-        printf("Time after closing finished serving: %u\n", timeAfterClose);
-        printf("Timed-out customers: %u\n", timedOut);
-        printf("Unfulfilled customers: %u\n", unfulfilled);
         printf("Fulfilled customers: %u\n", fulfilled); /* fulfilled customer are counted at the time they start being served */
+        printf("Unfulfilled customers: %u\n", unfulfilled);
+        printf("Timed-out customers: %u\n", timedOut);
         printf("Combined time spent waiting by fufilled customers: %u\n", combinedWaitTime);
+        printf("Time after closing finished serving: %u\n", timeAfterClose);
         fflush(stdout);
 
         totalTimedOut += timedOut;
         totalUnfulfilled += unfulfilled;
         totalFulfilled += fulfilled; /* fulfilled customer are counted at the time they start being served */
         totalWaitTime += combinedWaitTime;
+        totalTimeAfterClose += timeAfterClose;
         s++;
     }
-    float avgWaitFulfilled;
-    avgWaitFulfilled = (float)totalWaitTime / (float)totalFulfilled;
+    /* calculate averages for multiple simulations */
+    if ( (*numSims) != 1 )
+    {
+        float avgFulfilled = (float)totalFulfilled / (float)(*numSims);
+        float avgUnfulfilled = (float)totalUnfulfilled / (float)(*numSims);
+        float avgTimedOut = (float)totalTimedOut / (float)(*numSims);
+        printf("Average number of fulfilled customers: %f\n", avgFulfilled);
+        floatTypeCasting(fileOut, "Average number of fulfilled customers:", &avgFulfilled);
+        printf("Average number of unfulfilled customers: %f\n", avgUnfulfilled);
+        floatTypeCasting(fileOut, "Average number of unfulfilled customers:", &avgUnfulfilled);
+        printf("Average number of timed-out customers: %f\n", avgTimedOut);
+        floatTypeCasting(fileOut, "Average number of timed-out customers:", &avgTimedOut);
+    }
+
+
+    float avgWaitFulfilled = (float)totalWaitTime / (float)totalFulfilled;
     printf("Average wait time for fulfilled customers: %f\n", avgWaitFulfilled);
     floatTypeCasting(fileOut, "Average wait for fulfilled customers:", &avgWaitFulfilled);
+
+    /* calculate average time after closing for multiple simulations */
+    if ( (*numSims) != 1 )
+    {
+        float avgTimeAfterClose = (float)totalTimeAfterClose / (float)(*numSims);
+        printf("Average time after close until customers leave: %f\n", avgTimeAfterClose);
+        floatTypeCasting(fileOut, "Average time after close until customers leave:", &avgTimeAfterClose);
+    }
 
     gsl_rng_free(r); /* free the memory allocated to GSL random number generator */
 
     if ( (*numSims) != 1 )
     {
-        printf("Total timed-out customers: %u\n", totalTimedOut);
-        printf("Total unfulfilled customers: %u\n", totalUnfulfilled);
         printf("Total fulfilled customers: %u\n", totalFulfilled); /* fulfilled customer are counted at the time they start being served */
+        printf("Total unfulfilled customers: %u\n", totalUnfulfilled);
+        printf("Total timed-out customers: %u\n", totalTimedOut);
         printf("Total combined time spent waiting by fufilled customers: %u\n", totalWaitTime);
+        printf("Total combined time after closing until customers leave: %u\n", totalTimeAfterClose);
         fflush(stdout);
     }
 }
