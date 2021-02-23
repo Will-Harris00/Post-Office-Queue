@@ -30,6 +30,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
 
     unsigned int s = 1; /* number of simulations*/
     unsigned int tolerance; /* random customer waiting tolerance limit */
+    unsigned int newCustomers; /* random number of new customers */
 
     /* totals across all simulations */
     unsigned int totalTimedOut = 0;
@@ -80,8 +81,10 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
             if ( timeUnits < (*closingTime) )
             {
                 unsigned int j;
-
-                for ( j = 0; j < (*averageNewCustomersPerInterval); j++ )
+                newCustomers = chooseDistribution((*averageNewCustomersPerInterval),3,3, &r, &existsGSL); /* Poisson Distribution: mean avgServingTime, standard deviation 3 */
+                printf("Number of new customers: %u\n", newCustomers);
+                fflush(stdout);
+                for ( j = 0; j < newCustomers; j++ )
                 {
                     if ( count < (*maxQueueLength) || (*maxQueueLength) == -1 )
                     {
@@ -109,6 +112,7 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         printf("Unfulfilled customers: %u\n", unfulfilled);
         printf("Fulfilled customers: %u\n", fulfilled);
         printf("Combined time spent waiting by fufilled customers: %u\n", combinedWaitTime);
+        fflush(stdout);
 
         totalTimedOut += timedOut;
         totalUnfulfilled += unfulfilled;
@@ -123,4 +127,5 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     printf("Total unfulfilled customers: %u\n", totalUnfulfilled);
     printf("Total fulfilled customers: %u\n", totalFulfilled);
     printf("Total combined time spent waiting by fufilled customers: %u\n", totalWaitTime);
+    fflush(stdout);
 }
