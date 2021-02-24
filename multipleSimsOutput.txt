@@ -1,0 +1,20 @@
+
+Number of Simulations: 1000
+
+Max Queue Length: 20
+
+Number of Service Points: 3
+
+Time until close: 100
+
+Average waiting tolerance limit: 5
+
+Average time taken to serve customer: 5
+
+Average new customers per interval: 3
+
+Average number of fulfilled customers: 42.259998
+Average number of unfulfilled customers: 366.95001
+Average number of timed-out customers: 69.153999
+Average wait for fulfilled customers: 8.365949
+Average time after close until customers leave: 17.252001

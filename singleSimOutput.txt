@@ -1,0 +1,838 @@
+
+Number of Simulations: 1
+
+Max Queue Length: 20
+
+Number of Service Points: 3
+
+Time until close: 100
+
+Average waiting tolerance limit: 5
+
+Average time taken to serve customer: 5
+
+Average new customers per interval: 3
+
+Time units: 0
+Number of customers being served: 0
+Number of customers in queue: 0
+Current Number of fulfilled customers: 0
+Current Number of unfulfilled customers: 0
+Current Number of timed-out customers: 0
+
+Time units: 1
+Number of customers being served: 3
+Number of customers in queue: 7
+Current Number of fulfilled customers: 3
+Current Number of unfulfilled customers: 0
+Current Number of timed-out customers: 0
+
+Time units: 2
+Number of customers being served: 3
+Number of customers in queue: 11
+Current Number of fulfilled customers: 3
+Current Number of unfulfilled customers: 0
+Current Number of timed-out customers: 0
+
+Time units: 3
+Number of customers being served: 3
+Number of customers in queue: 14
+Current Number of fulfilled customers: 3
+Current Number of unfulfilled customers: 0
+Current Number of timed-out customers: 0
+
+Time units: 4
+Number of customers being served: 3
+Number of customers in queue: 18
+Current Number of fulfilled customers: 3
+Current Number of unfulfilled customers: 5
+Current Number of timed-out customers: 0
+
+Time units: 5
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 3
+Current Number of unfulfilled customers: 10
+Current Number of timed-out customers: 0
+
+Time units: 6
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 3
+Current Number of unfulfilled customers: 17
+Current Number of timed-out customers: 0
+
+Time units: 7
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 3
+Current Number of unfulfilled customers: 21
+Current Number of timed-out customers: 0
+
+Time units: 8
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 5
+Current Number of unfulfilled customers: 24
+Current Number of timed-out customers: 0
+
+Time units: 9
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 5
+Current Number of unfulfilled customers: 28
+Current Number of timed-out customers: 1
+
+Time units: 10
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 6
+Current Number of unfulfilled customers: 31
+Current Number of timed-out customers: 1
+
+Time units: 11
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 6
+Current Number of unfulfilled customers: 36
+Current Number of timed-out customers: 1
+
+Time units: 12
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 6
+Current Number of unfulfilled customers: 41
+Current Number of timed-out customers: 1
+
+Time units: 13
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 6
+Current Number of unfulfilled customers: 44
+Current Number of timed-out customers: 2
+
+Time units: 14
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 7
+Current Number of unfulfilled customers: 47
+Current Number of timed-out customers: 2
+
+Time units: 15
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 7
+Current Number of unfulfilled customers: 55
+Current Number of timed-out customers: 2
+
+Time units: 16
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 8
+Current Number of unfulfilled customers: 56
+Current Number of timed-out customers: 2
+
+Time units: 17
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 9
+Current Number of unfulfilled customers: 58
+Current Number of timed-out customers: 2
+
+Time units: 18
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 9
+Current Number of unfulfilled customers: 63
+Current Number of timed-out customers: 2
+
+Time units: 19
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 9
+Current Number of unfulfilled customers: 68
+Current Number of timed-out customers: 4
+
+Time units: 20
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 9
+Current Number of unfulfilled customers: 73
+Current Number of timed-out customers: 5
+
+Time units: 21
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 9
+Current Number of unfulfilled customers: 84
+Current Number of timed-out customers: 5
+
+Time units: 22
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 11
+Current Number of unfulfilled customers: 86
+Current Number of timed-out customers: 5
+
+Time units: 23
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 11
+Current Number of unfulfilled customers: 91
+Current Number of timed-out customers: 7
+
+Time units: 24
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 11
+Current Number of unfulfilled customers: 97
+Current Number of timed-out customers: 7
+
+Time units: 25
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 11
+Current Number of unfulfilled customers: 101
+Current Number of timed-out customers: 7
+
+Time units: 26
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 11
+Current Number of unfulfilled customers: 102
+Current Number of timed-out customers: 8
+
+Time units: 27
+Number of customers being served: 3
+Number of customers in queue: 17
+Current Number of fulfilled customers: 12
+Current Number of unfulfilled customers: 104
+Current Number of timed-out customers: 8
+
+Time units: 28
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 12
+Current Number of unfulfilled customers: 106
+Current Number of timed-out customers: 9
+
+Time units: 29
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 13
+Current Number of unfulfilled customers: 109
+Current Number of timed-out customers: 9
+
+Time units: 30
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 13
+Current Number of unfulfilled customers: 117
+Current Number of timed-out customers: 9
+
+Time units: 31
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 14
+Current Number of unfulfilled customers: 121
+Current Number of timed-out customers: 9
+
+Time units: 32
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 14
+Current Number of unfulfilled customers: 125
+Current Number of timed-out customers: 9
+
+Time units: 33
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 14
+Current Number of unfulfilled customers: 130
+Current Number of timed-out customers: 9
+
+Time units: 34
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 15
+Current Number of unfulfilled customers: 131
+Current Number of timed-out customers: 9
+
+Time units: 35
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 15
+Current Number of unfulfilled customers: 132
+Current Number of timed-out customers: 10
+
+Time units: 36
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 15
+Current Number of unfulfilled customers: 136
+Current Number of timed-out customers: 10
+
+Time units: 37
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 15
+Current Number of unfulfilled customers: 141
+Current Number of timed-out customers: 11
+
+Time units: 38
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 15
+Current Number of unfulfilled customers: 145
+Current Number of timed-out customers: 13
+
+Time units: 39
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 15
+Current Number of unfulfilled customers: 150
+Current Number of timed-out customers: 13
+
+Time units: 40
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 16
+Current Number of unfulfilled customers: 158
+Current Number of timed-out customers: 13
+
+Time units: 41
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 18
+Current Number of unfulfilled customers: 165
+Current Number of timed-out customers: 13
+
+Time units: 42
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 18
+Current Number of unfulfilled customers: 170
+Current Number of timed-out customers: 14
+
+Time units: 43
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 18
+Current Number of unfulfilled customers: 174
+Current Number of timed-out customers: 14
+
+Time units: 44
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 18
+Current Number of unfulfilled customers: 177
+Current Number of timed-out customers: 15
+
+Time units: 45
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 18
+Current Number of unfulfilled customers: 179
+Current Number of timed-out customers: 17
+
+Time units: 46
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 18
+Current Number of unfulfilled customers: 184
+Current Number of timed-out customers: 17
+
+Time units: 47
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 20
+Current Number of unfulfilled customers: 189
+Current Number of timed-out customers: 18
+
+Time units: 48
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 20
+Current Number of unfulfilled customers: 196
+Current Number of timed-out customers: 18
+
+Time units: 49
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 20
+Current Number of unfulfilled customers: 206
+Current Number of timed-out customers: 18
+
+Time units: 50
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 21
+Current Number of unfulfilled customers: 211
+Current Number of timed-out customers: 19
+
+Time units: 51
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 21
+Current Number of unfulfilled customers: 214
+Current Number of timed-out customers: 20
+
+Time units: 52
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 21
+Current Number of unfulfilled customers: 218
+Current Number of timed-out customers: 22
+
+Time units: 53
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 21
+Current Number of unfulfilled customers: 221
+Current Number of timed-out customers: 22
+
+Time units: 54
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 21
+Current Number of unfulfilled customers: 224
+Current Number of timed-out customers: 23
+
+Time units: 55
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 21
+Current Number of unfulfilled customers: 228
+Current Number of timed-out customers: 23
+
+Time units: 56
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 23
+Current Number of unfulfilled customers: 234
+Current Number of timed-out customers: 23
+
+Time units: 57
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 23
+Current Number of unfulfilled customers: 237
+Current Number of timed-out customers: 23
+
+Time units: 58
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 23
+Current Number of unfulfilled customers: 240
+Current Number of timed-out customers: 23
+
+Time units: 59
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 23
+Current Number of unfulfilled customers: 241
+Current Number of timed-out customers: 23
+
+Time units: 60
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 23
+Current Number of unfulfilled customers: 244
+Current Number of timed-out customers: 23
+
+Time units: 61
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 23
+Current Number of unfulfilled customers: 249
+Current Number of timed-out customers: 24
+
+Time units: 62
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 24
+Current Number of unfulfilled customers: 253
+Current Number of timed-out customers: 24
+
+Time units: 63
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 25
+Current Number of unfulfilled customers: 257
+Current Number of timed-out customers: 24
+
+Time units: 64
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 26
+Current Number of unfulfilled customers: 262
+Current Number of timed-out customers: 24
+
+Time units: 65
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 26
+Current Number of unfulfilled customers: 265
+Current Number of timed-out customers: 25
+
+Time units: 66
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 26
+Current Number of unfulfilled customers: 271
+Current Number of timed-out customers: 25
+
+Time units: 67
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 26
+Current Number of unfulfilled customers: 275
+Current Number of timed-out customers: 26
+
+Time units: 68
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 26
+Current Number of unfulfilled customers: 279
+Current Number of timed-out customers: 27
+
+Time units: 69
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 26
+Current Number of unfulfilled customers: 284
+Current Number of timed-out customers: 28
+
+Time units: 70
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 26
+Current Number of unfulfilled customers: 286
+Current Number of timed-out customers: 28
+
+Time units: 71
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 27
+Current Number of unfulfilled customers: 289
+Current Number of timed-out customers: 29
+
+Time units: 72
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 29
+Current Number of unfulfilled customers: 291
+Current Number of timed-out customers: 29
+
+Time units: 73
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 29
+Current Number of unfulfilled customers: 294
+Current Number of timed-out customers: 30
+
+Time units: 74
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 29
+Current Number of unfulfilled customers: 301
+Current Number of timed-out customers: 30
+
+Time units: 75
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 29
+Current Number of unfulfilled customers: 306
+Current Number of timed-out customers: 32
+
+Time units: 76
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 29
+Current Number of unfulfilled customers: 312
+Current Number of timed-out customers: 32
+
+Time units: 77
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 29
+Current Number of unfulfilled customers: 318
+Current Number of timed-out customers: 32
+
+Time units: 78
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 30
+Current Number of unfulfilled customers: 322
+Current Number of timed-out customers: 32
+
+Time units: 79
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 30
+Current Number of unfulfilled customers: 323
+Current Number of timed-out customers: 33
+
+Time units: 80
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 31
+Current Number of unfulfilled customers: 324
+Current Number of timed-out customers: 33
+
+Time units: 81
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 32
+Current Number of unfulfilled customers: 325
+Current Number of timed-out customers: 38
+
+Time units: 82
+Number of customers being served: 3
+Number of customers in queue: 17
+Current Number of fulfilled customers: 32
+Current Number of unfulfilled customers: 326
+Current Number of timed-out customers: 38
+
+Time units: 83
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 32
+Current Number of unfulfilled customers: 329
+Current Number of timed-out customers: 41
+
+Time units: 84
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 33
+Current Number of unfulfilled customers: 331
+Current Number of timed-out customers: 41
+
+Time units: 85
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 33
+Current Number of unfulfilled customers: 333
+Current Number of timed-out customers: 41
+
+Time units: 86
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 33
+Current Number of unfulfilled customers: 337
+Current Number of timed-out customers: 42
+
+Time units: 87
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 34
+Current Number of unfulfilled customers: 339
+Current Number of timed-out customers: 42
+
+Time units: 88
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 34
+Current Number of unfulfilled customers: 341
+Current Number of timed-out customers: 42
+
+Time units: 89
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 34
+Current Number of unfulfilled customers: 347
+Current Number of timed-out customers: 42
+
+Time units: 90
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 35
+Current Number of unfulfilled customers: 348
+Current Number of timed-out customers: 43
+
+Time units: 91
+Number of customers being served: 3
+Number of customers in queue: 19
+Current Number of fulfilled customers: 35
+Current Number of unfulfilled customers: 353
+Current Number of timed-out customers: 43
+
+Time units: 92
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 36
+Current Number of unfulfilled customers: 356
+Current Number of timed-out customers: 43
+
+Time units: 93
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 37
+Current Number of unfulfilled customers: 358
+Current Number of timed-out customers: 45
+
+Time units: 94
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 37
+Current Number of unfulfilled customers: 362
+Current Number of timed-out customers: 45
+
+Time units: 95
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 37
+Current Number of unfulfilled customers: 366
+Current Number of timed-out customers: 45
+
+Time units: 96
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 37
+Current Number of unfulfilled customers: 371
+Current Number of timed-out customers: 45
+
+Time units: 97
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 38
+Current Number of unfulfilled customers: 376
+Current Number of timed-out customers: 45
+
+Time units: 98
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 38
+Current Number of unfulfilled customers: 379
+Current Number of timed-out customers: 45
+
+Time units: 99
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 39
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 47
+
+Time units: 100
+Number of customers being served: 3
+Number of customers in queue: 20
+Current Number of fulfilled customers: 39
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 48
+
+
+Closing time reached: 100
+
+Time units: 101
+Number of customers being served: 3
+Number of customers in queue: 17
+Current Number of fulfilled customers: 40
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 49
+
+Time units: 102
+Number of customers being served: 3
+Number of customers in queue: 14
+Current Number of fulfilled customers: 40
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 49
+
+Time units: 103
+Number of customers being served: 3
+Number of customers in queue: 13
+Current Number of fulfilled customers: 40
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 51
+
+Time units: 104
+Number of customers being served: 3
+Number of customers in queue: 11
+Current Number of fulfilled customers: 41
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 52
+
+Time units: 105
+Number of customers being served: 3
+Number of customers in queue: 9
+Current Number of fulfilled customers: 42
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 53
+
+Time units: 106
+Number of customers being served: 3
+Number of customers in queue: 7
+Current Number of fulfilled customers: 42
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 53
+
+Time units: 107
+Number of customers being served: 3
+Number of customers in queue: 4
+Current Number of fulfilled customers: 42
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 53
+
+Time units: 108
+Number of customers being served: 3
+Number of customers in queue: 3
+Current Number of fulfilled customers: 43
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 53
+
+Time units: 109
+Number of customers being served: 3
+Number of customers in queue: 1
+Current Number of fulfilled customers: 43
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 53
+
+Time units: 110
+Number of customers being served: 3
+Number of customers in queue: 1
+Current Number of fulfilled customers: 43
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 54
+
+Time units: 111
+Number of customers being served: 3
+Number of customers in queue: 0
+Current Number of fulfilled customers: 43
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 54
+
+Time units: 112
+Number of customers being served: 2
+Number of customers in queue: 0
+Current Number of fulfilled customers: 43
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 54
+
+Time units: 113
+Number of customers being served: 2
+Number of customers in queue: 0
+Current Number of fulfilled customers: 43
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 54
+
+Time units: 114
+Number of customers being served: 2
+Number of customers in queue: 0
+Current Number of fulfilled customers: 43
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 54
+
+Time units: 115
+Number of customers being served: 1
+Number of customers in queue: 0
+Current Number of fulfilled customers: 43
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 54
+
+Time units: 116
+Number of customers being served: 0
+Number of customers in queue: 0
+Current Number of fulfilled customers: 43
+Current Number of unfulfilled customers: 386
+Current Number of timed-out customers: 54
+Time after close all customers leave: 17
+Average wait for fulfilled customers: 8.581395

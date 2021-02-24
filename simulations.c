@@ -147,14 +147,25 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
         totalTimeAfterClose += timeAfterClose;
         s++;
     }
+
+    if ( (*numSims) != 1 )
+    {
+        printf("\nTotal fulfilled customers: %u\n", totalFulfilled); /* fulfilled customer are counted at the time they start being served */
+        printf("Total unfulfilled customers: %u\n", totalUnfulfilled);
+        printf("Total timed-out customers: %u\n", totalTimedOut);
+        printf("Total combined time spent waiting by fufilled customers: %u\n", totalWaitTime);
+        printf("Total combined time after closing until customers leave: %u\n", totalTimeAfterClose);
+        fflush(stdout);
+    }
+
     /* calculate averages for multiple simulations */
     if ( (*numSims) != 1 )
     {
         float avgFulfilled = (float)totalFulfilled / (float)(*numSims);
         float avgUnfulfilled = (float)totalUnfulfilled / (float)(*numSims);
         float avgTimedOut = (float)totalTimedOut / (float)(*numSims);
-        printf("Average number of fulfilled customers: %f\n", avgFulfilled);
-        floatTypeCasting(fileOut, "Average number of fulfilled customers:", &avgFulfilled);
+        printf("\nAverage number of fulfilled customers: %f\n", avgFulfilled);
+        floatTypeCasting(fileOut, "\nAverage number of fulfilled customers:", &avgFulfilled);
         printf("Average number of unfulfilled customers: %f\n", avgUnfulfilled);
         floatTypeCasting(fileOut, "Average number of unfulfilled customers:", &avgUnfulfilled);
         printf("Average number of timed-out customers: %f\n", avgTimedOut);
@@ -175,14 +186,4 @@ void runSimulations(char *fileOut, int *numSims, int *maxQueueLength, unsigned i
     }
 
     gsl_rng_free(r); /* free the memory allocated to GSL random number generator */
-
-    if ( (*numSims) != 1 )
-    {
-        printf("Total fulfilled customers: %u\n", totalFulfilled); /* fulfilled customer are counted at the time they start being served */
-        printf("Total unfulfilled customers: %u\n", totalUnfulfilled);
-        printf("Total timed-out customers: %u\n", totalTimedOut);
-        printf("Total combined time spent waiting by fufilled customers: %u\n", totalWaitTime);
-        printf("Total combined time after closing until customers leave: %u\n", totalTimeAfterClose);
-        fflush(stdout);
-    }
 }

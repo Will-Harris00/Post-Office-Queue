@@ -1,6 +1,0 @@
-maxQueueLength 20
-numServicePoints 3
-closingTime 100
-averageNewCustomersPerInterval 3
-averageTimeTakenToServeCustomer 5
-averageWaitingToleranceOfCustomer 5
