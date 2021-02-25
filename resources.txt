@@ -1,0 +1,14 @@
+https://www.geeksforgeeks.org/structures-c/
+https://www.geeksforgeeks.org/data-structures/linked-list/
+https://www.gnu.org/software/gsl/doc/html/randist.html
+https://stackoverflow.com/questions/10468128/how-do-you-make-an-array-of-structs-in-c
+https://www.geeksforgeeks.org/queue-linked-list-implementation/
+https://www.geeksforgeeks.org/array-of-structures-vs-array-within-a-structure-in-c-and-cpp/
+https://www.geeksforgeeks.org/find-length-of-a-linked-list-iterative-and-recursive/
+https://www.geeksforgeeks.org/generic-linked-list-in-c-2/
+https://www.geeksforgeeks.org/linked-list-set-1-introduction/
+https://www.geeksforgeeks.org/linked-list-set-2-inserting-a-node/
+https://www.geeksforgeeks.org/linked-list-set-3-deleting-node/
+https://stackoverflow.com/questions/1814463/returning-a-structure-array-using-pointers
+https://www.geeksforgeeks.org/delete-occurrences-given-key-linked-list/
+https://stackoverflow.com/questions/22790851/reading-an-input-file-and-ignoring-blank-lines-or-lines-starting-with-in-c

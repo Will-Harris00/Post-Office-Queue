@@ -1,0 +1,3 @@
+gcc -ansi -c stack.c -I./ -o stack.o
+gcc -ansi -c myStackProgram.c -I./ -o myStackProgram.o
+gcc stack.o myStackProgram.o -o myStackProgram
