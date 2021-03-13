@@ -1,0 +1,22 @@
+# The format of this file is up to you, but think about the way you structure it
+# to make it easy to understand and use, without making it hard for your program
+# to read.
+
+# The standard parameters, as described in the specification:
+maxQueueLength   20
+numServicePoints 4
+closingTime      100
+
+# Probability distribution of customer arrivals
+customerArrivalsDistn P   # P=Poisson
+customerArrivalsP1    3   # Poisson: P1=mean
+
+# Probability distribution of service times
+serviceTimesDistn G   # G=Gaussian
+serviceTimesP1    3   # Gaussian: P1=mean
+serviceTimesP2    2   # Gaussian: P2=standard deviation
+
+# Probability distribution of customer boredom threshold
+customerTimeoutDistn G   # G=Gaussian
+customerTimeoutP1    3   # Gaussian: P1=mean
+customerTimeoutP2    2   # Gaussian: P2=standard deviation

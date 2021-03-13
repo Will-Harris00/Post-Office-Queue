@@ -1,0 +1,7 @@
+gcc -ansi -c utils.c -I./ -o utils.o
+gcc -ansi -c parameters.c -I./ -o parameters.o
+gcc -ansi -c customer.c -I./ -o customer.o
+gcc -ansi -c queue.c -I./ -o queue.o
+gcc -ansi -c randomNums.c -I./ -o randomNums.o
+gcc -ansi -c simQ.c -I./ -o simQ.o
+gcc utils.o parameters.o customer.o queue.o randomNums.o simQ.o -lm -lgsl -lgslcblas -o simQ
